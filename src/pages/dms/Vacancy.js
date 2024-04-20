@@ -16,15 +16,17 @@ export default function Vacancy({ theme, api_url }) {
 
   const getLimitedVacancyData = () => {
     axios
-      .get("http://localhost:9000/vacancyRoute/limit")
+      .get("http://192.168.52.21:9000/vacancyRoute/limit")
       .then(function (response) {
         setVacancyLimitedData(response.data);
       });
   };
   const getAllVacancyData = () => {
-    axios.get("http://localhost:9000/vacancyRoute").then(function (response) {
-      setVacancyData(response.data);
-    });
+    axios
+      .get("http://192.168.52.21:9000/vacancyRoute")
+      .then(function (response) {
+        setVacancyData(response.data);
+      });
   };
 
   const handleRemoveFile = (index) => {

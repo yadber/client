@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import SideBarMenu from "./menu/SideBarMenu";
 
-const api_url = "http://localhost:9000";
+const api_url = "http://192.168.52.21:9000";
 export default function App() {
   const getCurrentTheme = window.matchMedia(
     "(prefers-color-scheme: dark)"
