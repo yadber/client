@@ -2,7 +2,13 @@ import React, { useState } from "react";
 
 import { FaBarsStaggered } from "react-icons/fa6";
 import { MdCancel } from "react-icons/md";
-export default function SideBarMenu({ theme, api_url }) {
+
+export default function SideBarMenu({
+  theme,
+  api_url,
+  setSidebarMenu,
+  sideBarMenu,
+}) {
   const [mobileSidebarMenuClicked, setMobileSidebarMenu] = useState(false);
 
   return (
@@ -46,6 +52,36 @@ export default function SideBarMenu({ theme, api_url }) {
                 <span className="ms-3">Dashboard</span>
               </div>
             </li>
+
+            <li>
+              <div
+                className={`flex items-center p-2  rounded-lg group
+                ${sideBarMenu === "hr" && "bg-blue-400"}
+                ${
+                  theme
+                    ? "text-white hover:bg-gray-700"
+                    : "text-gray-900 hover:bg-gray-100"
+                }`}
+                onClick={() => setSidebarMenu("hr")}
+              >
+                <span className="ms-3">HR</span>
+              </div>
+            </li>
+
+            <li>
+              <div
+                className={`flex items-center p-2  rounded-lg    group
+                ${sideBarMenu === "dms" && "bg-blue-400"} ${
+                  theme
+                    ? "text-white hover:bg-gray-700"
+                    : "text-gray-900 hover:bg-gray-100"
+                }`}
+                onClick={() => setSidebarMenu("dms")}
+              >
+                <span className="ms-3">DMS</span>
+              </div>
+            </li>
+
             <li>
               <div
                 className={`flex items-center p-2  rounded-lg   group ${
