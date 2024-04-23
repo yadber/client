@@ -23,6 +23,7 @@ export default function Accordion({
   handleRemoveFile,
   vacancyData,
   vacancyLimitedData,
+  api_url,
 }) {
   const [accordionClicked, setAccordionClicked] = useState(false);
   const [tab, setTab] = useState("add");
@@ -123,6 +124,7 @@ export default function Accordion({
               <div className="mb-2 text-gray-500 dark:text-gray-400">
                 {tab === "add" && (
                   <DragAndDropFileInput
+                    api_url={api_url}
                     theme={theme}
                     handleMultipleSubmit={handleMultipleSubmit}
                     handleDrop={handleDrop}
@@ -162,6 +164,7 @@ export default function Accordion({
                                     theme={theme}
                                     title={res.vacancy_number}
                                     url={res.file_name}
+                                    api_url={api_url}
                                   />
                                 ))
                             : vacancyData.map((res) => (
@@ -170,6 +173,7 @@ export default function Accordion({
                                   theme={theme}
                                   title={res.vacancy_number}
                                   url={res.file_name}
+                                  api_url={api_url}
                                 />
                               ))}
                         </div>

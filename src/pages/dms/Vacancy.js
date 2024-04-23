@@ -15,18 +15,14 @@ export default function Vacancy({ theme, api_url }) {
   }, [files]);
 
   const getLimitedVacancyData = () => {
-    axios
-      .get("http://192.168.52.21:9000/vacancyRoute/limit")
-      .then(function (response) {
-        setVacancyLimitedData(response.data);
-      });
+    axios.get(`${api_url}/vacancyRoute/limit`).then(function (response) {
+      setVacancyLimitedData(response.data);
+    });
   };
   const getAllVacancyData = () => {
-    axios
-      .get("http://192.168.52.21:9000/vacancyRoute")
-      .then(function (response) {
-        setVacancyData(response.data);
-      });
+    axios.get(`${api_url}/vacancyRoute`).then(function (response) {
+      setVacancyData(response.data);
+    });
   };
 
   const handleRemoveFile = (index) => {
@@ -77,6 +73,7 @@ export default function Vacancy({ theme, api_url }) {
       <div className="flex flex-col">
         <ToastContainer />
         <Accordion
+          api_url={api_url}
           theme={theme}
           accordionTitle={"Vacancy"}
           handleMultipleSubmit={handleMultipleSubmit}

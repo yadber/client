@@ -15,6 +15,7 @@ export default function DragAndDropFileInput({
   handleMultipleChange,
   handleRemoveFile,
   vacancyLimitedData,
+  api_url,
 }) {
   return (
     <div className="flex flex-row gap-3">
@@ -149,6 +150,7 @@ export default function DragAndDropFileInput({
               title={res.vacancy_number}
               url={res.file_name}
               dragAndDrop={true}
+              api_url={api_url}
             />
           ))}
         </div>

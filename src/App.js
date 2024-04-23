@@ -1,21 +1,19 @@
 import { React, useState, useEffect } from "react";
 import SideBarMenu from "./menu/SideBarMenu";
+import NavBarMenu from "./menu/NavBarMenu";
 
-const api_url = "http://192.168.52.21:9000";
+const api_url = "http://localhost:9000";
 export default function App() {
-  const getCurrentTheme = window.matchMedia(
-    "(prefers-color-scheme: dark)"
-  ).matches;
-  const [isDarkTheme, setIsDarkTheme] = useState(getCurrentTheme);
+  const [isDarkTheme, setIsDarkTheme] = useState(true);
   document.body.style.backgroundColor = isDarkTheme ? "black" : "white";
-  useEffect(() => {
-    return () => {
-      setIsDarkTheme(getCurrentTheme);
-    };
-  });
 
   return (
     <div>
+      <NavBarMenu
+        theme={isDarkTheme}
+        api_url={api_url}
+        setIsDarkTheme={setIsDarkTheme}
+      />
       <SideBarMenu theme={isDarkTheme} api_url={api_url} />
     </div>
   );
