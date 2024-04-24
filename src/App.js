@@ -2,7 +2,6 @@ import { React, useState, useEffect } from "react";
 import SideBarMenu from "./menu/SideBarMenu";
 import NavBarMenu from "./menu/NavBarMenu";
 import HrComponent from "./components/hrComponents/HrComponent";
-
 const api_url = "http://172.20.122.120:9000";
 export default function App() {
   const [isDarkTheme, setIsDarkTheme] = useState(true);

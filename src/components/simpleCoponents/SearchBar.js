@@ -6,8 +6,11 @@ export default function SearchBar({
   placeholder,
   theme,
 }) {
+  function onSubmit(e) {
+    e.preventDefault();
+  }
   return (
-    <form className=" p-2">
+    <form className=" p-2" onSubmit={(e) => onSubmit(e)}>
       <div className="relative">
         <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
           <svg
