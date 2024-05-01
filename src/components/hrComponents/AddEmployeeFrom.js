@@ -5,23 +5,26 @@ import PhoneNumber from "../simpleCoponents/PhoneNumber";
 import { IoMdPersonAdd } from "react-icons/io";
 import FileInput from "../simpleCoponents/FileInput";
 import ButtonOne from "../simpleCoponents/ButtonOne";
-
+import SimpleDropdown from "../simpleCoponents/SimpleDropdown";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import axios from "axios";
 
 export default function AddEmployeeFrom({ theme, api_url, setRefresh }) {
+  const [clickedValue, setClickedValue] = useState("");
+  const [phoneNumberValidation, setPhoneNumberValidation] = useState(false);
+  const [fullNameValidation, setFullNameValidation] = useState(false);
+  const [imageValidation, setImageValidation] = useState(false);
+
   const [employeeFormData, setEmployeeFormData] = useState({
     file_number: "",
     full_name: "",
     muummee: "",
-    employee_type: "",
     phone_number: "",
   });
   const [employeeGender, setEmployeeGender] = useState("Dhiira");
   const [employeeProfile, setEmployeeProfile] = useState("");
-
   function OnChangeEmployeeForm(e) {
     const element = e.target;
     setEmployeeFormData((prevState) => ({
@@ -42,7 +45,31 @@ export default function AddEmployeeFrom({ theme, api_url, setRefresh }) {
 
   async function OnAddButtonClick() {
     const url = `${api_url}/employeeRoute`;
-    if (employeeProfile === "" && employeeFormData.file_number === "") {
+    /* phone number length, full name length and file type front end validation */
+    if (employeeFormData.phone_number.length !== 10) {
+      setPhoneNumberValidation(true);
+      setInterval(() => {
+        setPhoneNumberValidation(false);
+      }, 6000);
+    } else if (employeeFormData.full_name.length < 8) {
+      console.log(employeeProfile.type.includes("image"));
+      setFullNameValidation(true);
+      setInterval(() => {
+        setFullNameValidation(false);
+      }, 6000);
+    } else if (!employeeProfile.type.includes("image")) {
+      setImageValidation(true);
+      setInterval(() => {
+        setImageValidation(false);
+      }, 6000);
+    } else if (
+      employeeProfile === "" ||
+      employeeFormData.file_number === "" ||
+      employeeFormData.full_name === "" ||
+      employeeFormData.muumee === "" ||
+      employeeFormData.phone_number === "" ||
+      clickedValue === ""
+    ) {
       toast.error("all fields must be field!", {
         position: "top-center",
         autoClose: 3000,
@@ -58,7 +85,7 @@ export default function AddEmployeeFrom({ theme, api_url, setRefresh }) {
       formData.append("file_number", employeeFormData.file_number);
       formData.append("full_name", employeeFormData.full_name);
       formData.append("muummee", employeeFormData.muummee);
-      formData.append("employee_type", employeeFormData.employee_type);
+      formData.append("employee_type", clickedValue);
       formData.append("phone_number", employeeFormData.phone_number);
       formData.append("gender", employeeGender);
 
@@ -77,9 +104,9 @@ export default function AddEmployeeFrom({ theme, api_url, setRefresh }) {
           file_number: "",
           full_name: "",
           muummee: "",
-          employee_type: "",
           phone_number: "",
         });
+        setClickedValue("");
         setEmployeeProfile("");
         setEmployeeGender("Dhiira");
         setRefresh((prevState) => prevState + 1);
@@ -92,8 +119,26 @@ export default function AddEmployeeFrom({ theme, api_url, setRefresh }) {
           draggable: true,
           theme: "colored",
         });
-      } else {
-        console.log("error");
+      } else if (result.data === "file_number_exist") {
+        toast.error("File Number Exists!", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored",
+        });
+      } else if (result.data === "phone_number_exist") {
+        toast.error("Phone Number Exists!", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored",
+        });
       }
     }
   }
@@ -110,6 +155,7 @@ export default function AddEmployeeFrom({ theme, api_url, setRefresh }) {
       <FloatingLabel
         theme={theme}
         title={"Maqaa Guutuu"}
+        fullNameValidation={fullNameValidation}
         name="full_name"
         upperCase={true}
         OnChangeEmployeeForm={OnChangeEmployeeForm}
@@ -130,21 +176,28 @@ export default function AddEmployeeFrom({ theme, api_url, setRefresh }) {
         OnChangeEmployeeForm={OnChangeEmployeeForm}
         employeeFormData={employeeFormData.muummee}
       />
-      <FloatingLabel
+      <SimpleDropdown
         theme={theme}
-        title={"Haala Qaxarrii"}
-        name="employee_type"
-        OnChangeEmployeeForm={OnChangeEmployeeForm}
-        employeeFormData={employeeFormData.employee_type}
+        clickedValue={clickedValue}
+        setClickedValue={setClickedValue}
       />
       <div className="flex justify-center items-center gap-3 ">
-        <PhoneNumber
+        <div>
+          <PhoneNumber
+            theme={theme}
+            name="phone_number"
+            OnChangeEmployeeForm={OnChangeEmployeeForm}
+            employeeFormData={employeeFormData.phone_number}
+            phoneNumberValidation={phoneNumberValidation}
+          />
+        </div>
+
+        <FileInput
           theme={theme}
-          name="phone_number"
-          OnChangeEmployeeForm={OnChangeEmployeeForm}
-          employeeFormData={employeeFormData.phone_number}
+          handleFileUpload={handleFileUpload}
+          accept={"image/*"}
+          imageValidation={imageValidation}
         />
-        <FileInput theme={theme} handleFileUpload={handleFileUpload} />
         <div className="mt-5">
           <ButtonOne
             theme={theme}

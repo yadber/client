@@ -4,18 +4,18 @@ import EmployeeCard from "./EmployeeCard";
 import SearchBar from "../simpleCoponents/SearchBar";
 import AddEmployeeFrom from "./AddEmployeeFrom";
 
-export default function HrComponent({ theme, api_url }) {
+export default function HrComponent({ theme, api_url, forDms }) {
   const [employeeData, setEmployeeData] = useState([]);
   const [refresh, setRefresh] = useState(1);
   const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
-    async function GetDirectorateList() {
+    async function getEmployeeData() {
       const response = await fetch(`${api_url}/employeeRoute`);
       const employeeDataFromServer = await response.json();
       setEmployeeData(employeeDataFromServer);
     }
-    GetDirectorateList();
+    getEmployeeData();
   }, [refresh]);
 
   function onChangeSearchValue(e) {
@@ -25,11 +25,13 @@ export default function HrComponent({ theme, api_url }) {
 
   return (
     <div className="flex gap-2 flex-col p-2">
-      <AddEmployeeFrom
-        theme={theme}
-        api_url={api_url}
-        setRefresh={setRefresh}
-      />
+      {!forDms && (
+        <AddEmployeeFrom
+          theme={theme}
+          api_url={api_url}
+          setRefresh={setRefresh}
+        />
+      )}
       <div className="flex gap-2 flex-col ">
         <SearchBar
           placeholder={"Search Employee using Employee Name"}
@@ -57,6 +59,7 @@ export default function HrComponent({ theme, api_url }) {
                 phoneNumber={val.phone_number}
                 Gender={val.Gender}
                 type={val.type}
+                dms={val.dms}
               />
             ))}
         </div>

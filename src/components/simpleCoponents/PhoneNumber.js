@@ -5,18 +5,21 @@ export default function PhoneNumber({
   name,
   OnChangeEmployeeForm,
   employeeFormData,
+  phoneNumberValidation,
 }) {
   return (
     <form className="max-w-sm mx-auto ml-0">
       <label
-        className={`block mb-2 text-sm font-medium   ${
+        className={`block mb-2 text-sm font-medium  ${
           theme ? "text-white" : "text-gray-900"
         }`}
       >
         Phone number:
       </label>
       <div className="relative">
-        <div className="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
+        <div
+          className={`absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none  `}
+        >
           <svg
             className={`w-4 h-4   ${theme ? "text-gray-400" : "text-gray-500"}`}
             xmlns="http://www.w3.org/2000/svg"
@@ -31,7 +34,9 @@ export default function PhoneNumber({
           type="number"
           onChange={OnChangeEmployeeForm}
           value={employeeFormData}
-          className={` text-sm rounded-lg  block w-full ps-10 p-2.5   ${
+          className={` text-sm rounded-lg  block w-full ps-10 p-2.5 ${
+            phoneNumberValidation && "border-2 border-red-500"
+          }     ${
             theme
               ? "bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
               : "bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
