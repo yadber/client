@@ -1,27 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
 
 import FloatingLabel from "../simpleCoponents/FloatingLabel";
 
-export default function ScanCategoryFrom({ theme, api_url, EditMode }) {
-  const [categoryFormData, setCategoryFormData] = useState({
-    category_title: "",
-    display_order: "",
-  });
-
-  const OnChangeEmployeeForm = (e) => {
-    const event = e.target;
-    setCategoryFormData((prevState) => ({
-      ...prevState,
-      [event.name]: [event.value],
-    }));
-  };
+export default function ScanCategoryFrom({
+  theme,
+  api_url,
+  onSubmitFormAdd,
+  OnChangeEmployeeForm,
+  categoryFormData,
+  editMode,
+  cancelEditMode,
+  onSubmitFormEdit,
+}) {
   return (
     <div
       className={`max-w-[13rem]   border border-gray-200 rounded-3xl   ${
         theme ? "bg-gray-800" : "bg-white"
       } `}
     >
-      <form className="">
+      <form
+        onSubmit={
+          !editMode ? (e) => onSubmitFormAdd(e) : (e) => onSubmitFormEdit(e)
+        }
+      >
         <div className=" p-3 w-full flex flex-col gap-2">
           <FloatingLabel
             theme={theme}
@@ -45,14 +46,22 @@ export default function ScanCategoryFrom({ theme, api_url, EditMode }) {
         <div className="p-4">
           <button
             className={` w-full  ${
-              EditMode ? "bg-yellow-600" : "bg-blue-600"
+              editMode ? "bg-yellow-600" : "bg-blue-600"
             } text-white px-7 py-3 text-xl font-medium uppercase rounded-3xl shadow-md  transition duration-150 ease-in-out hover:shadow-lg active:bg-blue-800 `}
             type="submit"
           >
-            {EditMode ? "EDIT" : "ADD"}
+            {editMode ? "EDIT" : "ADD"}
           </button>
         </div>
       </form>
+      {editMode && (
+        <button
+          className={` w-full text-white px-7 py-3 text-sm font-medium uppercase rounded-3xl shadow-md  transition duration-150 ease-in-out hover:shadow-lg active:bg-blue-800 bg-red-600`}
+          onClick={() => cancelEditMode()}
+        >
+          Cancel Edit form
+        </button>
+      )}
     </div>
   );
 }

@@ -1,17 +1,42 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 
-export default function ScanCategoryTable({ theme, api_url }) {
-  const [categoryData, setCategoryData] = useState([]);
+import TableRow from "../tableComponents/TableRow";
 
-  useEffect(() => {
-    getAllScanCategory();
-  }, []);
-
-  const getAllScanCategory = () => {
-    axios.get(`${api_url}/scanCategory`).then(function (response) {
-      setCategoryData(response.data);
-    });
-  };
-  return <div>table{categoryData.map((val) => val.id)}</div>;
+export default function ScanCategoryTable({
+  theme,
+  api_url,
+  categoryData,
+  onDeleteScanCategoryClicked,
+  onEditScanCategoryClicked,
+}) {
+  return (
+    <div className="relative overflow-x-auto">
+      <table
+        className={`w-full text-sm text-left rtl:text-right   ${
+          theme ? "text-gray-400" : "text-gray-500"
+        }`}
+      >
+        <thead
+          class={`text-xs  uppercase    ${
+            theme ? "bg-gray-700 text-gray-400" : "text-gray-700 bg-gray-50"
+          }`}
+        ></thead>
+        <tbody>
+          {categoryData.map((val) => (
+            <TableRow
+              key={val.id}
+              theme={theme}
+              id={val.id}
+              title={val.title}
+              color={val.color}
+              displayOrder={val.display_order}
+              table={val.table_name}
+              onDeleteScanCategoryClicked={onDeleteScanCategoryClicked}
+              onEditScanCategoryClicked={onEditScanCategoryClicked}
+            />
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 }
