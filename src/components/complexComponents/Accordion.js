@@ -78,7 +78,7 @@ export default function Accordion({
           <button
             className={`flex items-center justify-between w-full p-5 font-medium rtl:text-right  border border-b-0  rounded-t-xl focus:ring-4   gap-3 ${
               theme
-                ? "focus:ring-gray-800 border-gray-700 text-gray-400 hover:bg-gray-600 bg-gray-700"
+                ? "focus:ring-gray-800 border-gray-700 text-gray-400 hover:bg-gray-600 bg-gray-600"
                 : "text-gray-500 border-gray-100 focus:ring-gray-200  hover:bg-gray-100 bg-gray-200"
             }`}
             onClick={() => setAccordionClicked((prevState) => !prevState)}

@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
 import EmployeeCard from "../hrComponents/EmployeeCard";
 import SearchBar from "../simpleCoponents/SearchBar";
+import Modal from "../complexComponents/Modal";
 
 export default function DmsComponent({ theme, api_url }) {
   const [dmsEmployeeData, setDmsEmployeeData] = useState([]);
   const [newemployeeData, setNewEmployeeData] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [modalNameAndId, setModalNameAndId] = useState({
+    id: "",
+    name: "",
+  });
 
   useEffect(() => {
     async function getNewEmployeeData() {
@@ -27,8 +33,12 @@ export default function DmsComponent({ theme, api_url }) {
     setSearchValue(e.target.value);
   }
 
-  function onEmployeeCardClicked(id) {
-    //   setOpenModal(true);
+  function onEmployeeCardClicked(id, name) {
+    setModalNameAndId({
+      id: id,
+      name: name,
+    });
+    setShowModal(true);
   }
   return (
     <div>
@@ -83,6 +93,16 @@ export default function DmsComponent({ theme, api_url }) {
             />
           ))}
       </div>
+      {showModal && (
+        <Modal
+          api_url={api_url}
+          theme={theme}
+          name={modalNameAndId.name}
+          id={modalNameAndId.id}
+          showModal={showModal}
+          setShowModal={setShowModal}
+        />
+      )}
     </div>
   );
 }

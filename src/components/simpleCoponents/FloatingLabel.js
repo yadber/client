@@ -4,6 +4,7 @@ export default function FloatingLabel({
   theme,
   title,
   name,
+  type,
   employeeFormData,
   OnChangeEmployeeForm,
   upperCase,
@@ -12,10 +13,11 @@ export default function FloatingLabel({
   return (
     <div className="relative">
       <input
+        required
         name={name}
         value={employeeFormData}
         onChange={(e) => OnChangeEmployeeForm(e)}
-        type="text"
+        type={type ? type : "text"}
         className={`block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm    border-0 border-b-2  appearance-none   focus:outline-none focus:ring-0  peer 
         ${upperCase && "uppercase w-[18rem]"}
         ${fullNameValidation && "border-2 border-red-500"}

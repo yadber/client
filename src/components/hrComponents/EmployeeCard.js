@@ -22,7 +22,7 @@ export default function EmployeeCard({
           ? "bg-gray-800 hover:bg-gray-600 border-gray-700"
           : "bg-white hover:bg-gray-200 border-gray-200"
       }`}
-      onClick={() => onEmployeeCardClicked()}
+      onClick={() => onEmployeeCardClicked(id, name)}
     >
       <div className="flex flex-col items-center pb-10">
         <img

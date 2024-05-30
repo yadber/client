@@ -8,10 +8,29 @@ export default function Vacancy({ theme, api_url }) {
   const [files, setFiles] = useState([]);
   const [vacancyLimitedData, setVacancyLimitedData] = useState([]);
   const [vacancyData, setVacancyData] = useState([]);
+  // const category = [
+  //   "Vacancy ",
+  //   "Beeksisa Buaa Qormaataa",
+  //   "Qorannoo Fayyaa/Ashaaraa",
+  //   "Waliigaltee",
+  //   "Ragaa Barnootaa",
+  //   "Wabii",
+  //   "Xalayaa Qaxarrii/Ramaddii",
+  //   "Xalayaa Adda adda",
+  //   " Liqii",
+  //   " Adabbii",
+  //   " Boqonnaa Waggaa sick leave",
+  //   " Seenaa Jireenyaa",
+  //   " Muxannoo",
+  //   " Madaallii/Eficiance",
+  // ];
+
+  const [scanCategory, setScanCategory] = useState([]);
 
   useEffect(() => {
     getAllVacancyData();
     getLimitedVacancyData();
+    getAllScanCategory();
   }, [files]);
 
   const getLimitedVacancyData = () => {
@@ -22,6 +41,12 @@ export default function Vacancy({ theme, api_url }) {
   const getAllVacancyData = () => {
     axios.get(`${api_url}/vacancyRoute`).then(function (response) {
       setVacancyData(response.data);
+    });
+  };
+
+  const getAllScanCategory = () => {
+    axios.get(`${api_url}/scanCategory`).then(function (response) {
+      setScanCategory(response.data);
     });
   };
 
@@ -70,20 +95,23 @@ export default function Vacancy({ theme, api_url }) {
   }
   return (
     <>
-      <div className="flex flex-col">
+      <div className="flex flex-col gap-2">
+        {scanCategory.map((val) => (
+          <Accordion
+            key={val.id}
+            api_url={api_url}
+            theme={theme}
+            accordionTitle={val.title}
+            handleMultipleSubmit={handleMultipleSubmit}
+            handleDrop={handleDrop}
+            files={files}
+            handleMultipleChange={handleMultipleChange}
+            handleRemoveFile={handleRemoveFile}
+            vacancyData={vacancyData}
+            vacancyLimitedData={vacancyLimitedData}
+          />
+        ))}
         <ToastContainer />
-        <Accordion
-          api_url={api_url}
-          theme={theme}
-          accordionTitle={"Vacancy"}
-          handleMultipleSubmit={handleMultipleSubmit}
-          handleDrop={handleDrop}
-          files={files}
-          handleMultipleChange={handleMultipleChange}
-          handleRemoveFile={handleRemoveFile}
-          vacancyData={vacancyData}
-          vacancyLimitedData={vacancyLimitedData}
-        />
       </div>
     </>
   );
