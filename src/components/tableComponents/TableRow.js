@@ -10,6 +10,7 @@ export default function TableRow({
   table,
   onDeleteScanCategoryClicked,
   onEditScanCategoryClicked,
+  date,
 }) {
   return (
     <tbody>
@@ -31,6 +32,7 @@ export default function TableRow({
         <td className="px-6 py-4">{color}</td>
         <td className="px-6 py-4">{displayOrder}</td>
         <td className="px-6 py-4">{table}</td>
+        <td className="px-6 py-4">{date}</td>
         <td
           className="px-6 py-4 hover:text-red-500 cursor-pointer"
           onClick={() => onDeleteScanCategoryClicked(id)}

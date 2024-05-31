@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import { HiOutlineDocumentText } from "react-icons/hi2";
 import Gallery from "../simpleCoponents/Gallery";
 import SearchBar from "../simpleCoponents/SearchBar";
-
+import axios from "axios";
 import { AgGridReact } from "ag-grid-react"; // AG Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
 import "ag-grid-community/styles/ag-theme-quartz.css";
+import { ToastContainer, toast } from "react-toastify";
 
 import { FaTable } from "react-icons/fa6";
 import { GrGallery } from "react-icons/gr";
@@ -16,53 +17,69 @@ import AccordionTabs from "../Tabs/AccordionTabs";
 export default function Accordion({
   theme,
   accordionTitle,
-  handleMultipleSubmit,
   handleDrop,
   files,
   handleMultipleChange,
   handleRemoveFile,
-  vacancyData,
-  vacancyLimitedData,
+  table,
   api_url,
+  setFiles,
+  employee_id,
 }) {
+  let [vacancyData, setVacancyData] = useState([]);
   const [accordionClicked, setAccordionClicked] = useState(false);
+  const [vacancyLimitedData, setVacancyLimitedData] = useState([]);
   const [tab, setTab] = useState("add");
   const [viewType, setViewType] = useState("gallery");
   const [searchValue, setSearchValue] = useState("");
   const pagination = true;
   const paginationPageSize = 20;
   const paginationPageSizeSelector = [20, 500, 100];
-  const [columnDefs, setColumnDefs] = useState([
+  useEffect(() => {
+    getAllVacancyData();
+    getLimitedVacancyData();
+  }, [files]);
+
+  const [columnDefs] = useState([
     {
       headerName: "vacancy number",
       flex: 1,
       filter: true,
-      // valueGetter: p => p.make + ' ' + p.model},
       field: "vacancy_number",
     },
     {
       headerName: "vacancy date",
       flex: 1,
       filter: true,
-      // valueGetter: p => p.make + ' ' + p.model},
       field: "vacancy_date",
     },
     {
       headerName: "File Name",
       flex: 1,
       filter: true,
-      // valueGetter: p => p.make + ' ' + p.model},
       field: "file_name",
     },
     {
       headerName: "File size",
       flex: 1,
       filter: true,
-
-      // valueGetter: p => p.make + ' ' + p.model},
       field: "file_size",
     },
   ]);
+  const getAllVacancyData = () => {
+    axios
+      .get(`${api_url}/vacancyRoute/${table}/${employee_id}`)
+      .then(function (response) {
+        setVacancyData(response.data);
+      });
+  };
+  const getLimitedVacancyData = () => {
+    axios
+      .get(`${api_url}/vacancyRoute/limit/${table}/${employee_id}`)
+      .then(function (response) {
+        setVacancyLimitedData(response.data);
+      });
+  };
   const onChangeSearchValue = (e) => {
     const element = e.target.value;
     setSearchValue(element);
@@ -71,8 +88,37 @@ export default function Accordion({
       res.vacancy_number.includes(searchValue)
     );
   };
+
+  async function handleMultipleSubmit(event) {
+    event.preventDefault();
+    const url = `${api_url}/vacancyRoute/${employee_id}/${table}`;
+    const formData = new FormData();
+    formData.append("vacancy", files[0]);
+    const result = await axios({
+      method: "post",
+      url: url,
+      data: formData,
+      header: {
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    if (result.data === "saved_vacancy_post") {
+      setFiles([]);
+      toast.success("Vacancy saved successfully!", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
+    }
+  }
   return (
     <div>
+      <ToastContainer />
       <div>
         <h2>
           <button

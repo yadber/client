@@ -19,6 +19,7 @@ function ToastSuccess(title) {
     theme: "colored",
   });
 }
+
 function ToastWarning(title) {
   return toast.info(`${title}`, {
     position: "top-center",
@@ -30,6 +31,7 @@ function ToastWarning(title) {
     theme: "colored",
   });
 }
+
 function ToastDanger(title) {
   return toast.warning(`${title}`, {
     position: "top-center",
@@ -122,9 +124,13 @@ export default function ScanCategorySetting({ theme, api_url }) {
         {
           label: "Yes",
           onClick: () =>
-            axios.delete(`${api_url}/scanCategory/${id}`).then((data) => {
-              ToastDanger("Deleted successfully!");
-              setRefresh((prevState) => !prevState);
+            axios.delete(`${api_url}/scanCategory/${id}`).then((response) => {
+              if (response.data === "CantDelete") {
+                ToastWarning("Can Not Delete");
+              } else {
+                ToastDanger("Deleted successfully!");
+                setRefresh((prevState) => !prevState);
+              }
             }),
         },
         {

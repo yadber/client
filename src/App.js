@@ -3,7 +3,7 @@ import SideBarMenu from "./menu/SideBarMenu";
 import NavBarMenu from "./menu/NavBarMenu";
 import HrComponent from "./components/hrComponents/HrComponent";
 import DmsComponent from "./components/dmsComponent/DmsComponent";
-const api_url = "http://172.20.120.200:9000";
+const api_url = "http://localhost:9000";
 export default function App() {
   const [isDarkTheme, setIsDarkTheme] = useState(true);
   document.body.style.backgroundColor = isDarkTheme ? "black" : "white";

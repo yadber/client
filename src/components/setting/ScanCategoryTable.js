@@ -30,6 +30,7 @@ export default function ScanCategoryTable({
               title={val.title}
               color={val.color}
               displayOrder={val.display_order}
+              date={val.created_date}
               table={val.table_name}
               onDeleteScanCategoryClicked={onDeleteScanCategoryClicked}
               onEditScanCategoryClicked={onEditScanCategoryClicked}
