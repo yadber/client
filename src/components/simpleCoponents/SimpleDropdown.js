@@ -4,6 +4,9 @@ export default function SimpleDropdown({
   clickedValue,
   setClickedValue,
   theme,
+  optionOne,
+  optionTwo,
+  optionThree,
 }) {
   const [dropdownClicked, setDropdownClicked] = useState(false);
 
@@ -35,7 +38,9 @@ export default function SimpleDropdown({
             theme ? "text-gray-200" : "text-gray-700"
           }`}
         >
-          <li onClick={() => setClickedValue("Dhaabbii")}>
+          <li
+            onClick={() => setClickedValue(optionOne ? optionOne : "Dhaabbii")}
+          >
             <p
               className={`block px-4 py-2   ${
                 theme
@@ -44,10 +49,12 @@ export default function SimpleDropdown({
               }`}
               onClick={() => setDropdownClicked(false)}
             >
-              Dhaabbii
+              {optionOne ? optionOne : "Dhaabbii"}
             </p>
           </li>
-          <li onClick={() => setClickedValue("Freelance")}>
+          <li
+            onClick={() => setClickedValue(optionTwo ? optionTwo : "Freelance")}
+          >
             <p
               className={`block px-4 py-2   ${
                 theme
@@ -56,10 +63,14 @@ export default function SimpleDropdown({
               }`}
               onClick={() => setDropdownClicked(false)}
             >
-              Freelance
+              {optionTwo ? optionTwo : "Freelance"}
             </p>
           </li>
-          <li onClick={() => setClickedValue("Contract")}>
+          <li
+            onClick={() =>
+              setClickedValue(optionThree ? optionThree : "Contract")
+            }
+          >
             <p
               className={`block px-4 py-2   ${
                 theme
@@ -68,7 +79,7 @@ export default function SimpleDropdown({
               }`}
               onClick={() => setDropdownClicked(false)}
             >
-              Contract
+              {optionThree ? optionThree : "Contract"}
             </p>
           </li>
         </ul>

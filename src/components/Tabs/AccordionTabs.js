@@ -1,7 +1,6 @@
 import React from "react";
-import { MdPostAdd } from "react-icons/md";
+import { MdPostAdd, MdOutlineSettings } from "react-icons/md";
 import { GrView } from "react-icons/gr";
-import { RiAiGenerate } from "react-icons/ri";
 
 export default function AccordionTabs({ theme, tab, setTab }) {
   return (
@@ -35,16 +34,16 @@ export default function AccordionTabs({ theme, tab, setTab }) {
         <GrView />{" "}
       </div>
       <div
-        onClick={() => setTab("generate")}
+        onClick={() => setTab("setting")}
         className={`border-2 p-2 rounded-xl cursor-pointer ${
-          tab === "generate" && "bg-gray-600"
+          tab === "setting" && "bg-gray-600"
         }  ${
           theme
             ? "border-gray-600 bg-gray-800 hover:bg-gray-600"
             : "border-gray-400 bg-gray-200 hover:bg-gray-100"
         }`}
       >
-        <RiAiGenerate />{" "}
+        <MdOutlineSettings />{" "}
       </div>
     </div>
   );

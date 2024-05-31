@@ -2,8 +2,6 @@ import React from "react";
 import { FaCloudUploadAlt, FaUpload } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { LuScanLine } from "react-icons/lu";
-import { CiWarning } from "react-icons/ci";
-import { FcApprove } from "react-icons/fc";
 import Gallery from "./Gallery";
 import ButtonOne from "./ButtonOne";
 
@@ -74,26 +72,26 @@ export default function DragAndDropFileInput({
                 onChange={handleMultipleChange}
               />
             </label>
-            <div
+            {/* <div
               className={`flex mt-2 w-full lg:w-fit items-center p-4 mb-4 text-sm  rounded-lg     ${
                 theme
                   ? "bg-gray-800 border-yellow-800 text-yellow-300"
                   : "text-yellow-800 border border-yellow-300 bg-yellow-50"
               }`}
-            >
-              <CiWarning />
+            > */}
+            {/* <CiWarning />
               <div className="font-serif  items-center justify-center hidden lg:flex lg:text-sm">
                 The file naming must start with vacancy number then vacancy date
               </div>
               <div className="font-serif  items-center justify-center flex lg:hidden lg:text-sm">
                 file naming
-              </div>
+              </div> */}
 
-              <div className="flex items-center justify-center">
+            {/* <div className="flex items-center justify-center">
                 <FcApprove />
                 <span className="font-bold">obn-123-200(23-12-2012)</span>
-              </div>
-            </div>
+              </div> */}
+            {/* </div> */}
           </div>
         }
 

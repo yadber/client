@@ -8,7 +8,7 @@ import { AgGridReact } from "ag-grid-react"; // AG Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import { ToastContainer, toast } from "react-toastify";
-
+import ScanSubCategoryForm from "./ScanSubCategoryForm";
 import { FaTable } from "react-icons/fa6";
 import { GrGallery } from "react-icons/gr";
 
@@ -245,6 +245,10 @@ export default function Accordion({
                       </div>
                     )}
                   </div>
+                )}
+
+                {tab === "setting" && (
+                  <ScanSubCategoryForm api_url={api_url} theme={theme} />
                 )}
               </div>
             </div>
