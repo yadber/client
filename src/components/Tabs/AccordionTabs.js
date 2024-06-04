@@ -11,10 +11,10 @@ export default function AccordionTabs({ theme, tab, setTab }) {
     >
       <div
         className={`border-2 p-2 rounded-xl cursor-pointer
-        ${tab === "add" && "bg-gray-600"} ${
+        ${tab === "add" && "bg-green-600"} ${
           theme
-            ? "border-gray-600 bg-gray-800 hover:bg-gray-600"
-            : "border-gray-400 bg-gray-200 hover:bg-gray-100"
+            ? "border-gray-600 bg-gray-800 hover:bg-green-600"
+            : "border-gray-400 bg-gray-200 hover:bg-green-600"
         }`}
         onClick={() => setTab("add")}
       >
@@ -22,11 +22,11 @@ export default function AccordionTabs({ theme, tab, setTab }) {
       </div>
       <div
         className={`border-2 p-2 rounded-xl cursor-pointer   ${
-          tab === "view" && "bg-gray-600"
+          tab === "view" && "bg-green-600"
         } ${
           theme
-            ? "border-gray-600 bg-gray-800 hover:bg-gray-600"
-            : "border-gray-400 bg-gray-200 hover:bg-gray-100"
+            ? "border-gray-600 bg-gray-800 hover:bg-green-600"
+            : "border-gray-400 bg-gray-200 hover:bg-green-600"
         }`}
         onClick={() => setTab("view")}
       >
@@ -36,11 +36,11 @@ export default function AccordionTabs({ theme, tab, setTab }) {
       <div
         onClick={() => setTab("setting")}
         className={`border-2 p-2 rounded-xl cursor-pointer ${
-          tab === "setting" && "bg-gray-600"
+          tab === "setting" && "bg-green-600"
         }  ${
           theme
-            ? "border-gray-600 bg-gray-800 hover:bg-gray-600"
-            : "border-gray-400 bg-gray-200 hover:bg-gray-100"
+            ? "border-gray-600 bg-gray-800 hover:bg-green-600"
+            : "border-gray-400 bg-gray-200 hover:bg-green-600"
         }`}
       >
         <MdOutlineSettings />{" "}

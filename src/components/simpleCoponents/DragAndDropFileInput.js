@@ -4,6 +4,7 @@ import { MdDelete } from "react-icons/md";
 import { LuScanLine } from "react-icons/lu";
 import Gallery from "./Gallery";
 import ButtonOne from "./ButtonOne";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function DragAndDropFileInput({
   theme,
@@ -16,7 +17,8 @@ export default function DragAndDropFileInput({
   api_url,
 }) {
   return (
-    <div className="flex flex-row gap-3">
+    <div className="flex flex-row gap-3 w-full">
+      <ToastContainer />
       <div className="md:basis-3/4">
         {
           <div

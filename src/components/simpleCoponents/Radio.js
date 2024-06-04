@@ -7,6 +7,8 @@ export default function Radio({
   OnChangeEmployeeForm,
   name,
   employeeGender,
+  title,
+  please,
 }) {
   return (
     <div>
@@ -15,8 +17,12 @@ export default function Radio({
           type="radio"
           value={optionOne}
           name={name}
-          checked={employeeGender === "Dhiira" ? true : false}
-          onChange={() => OnChangeEmployeeForm(optionOne)}
+          checked={employeeGender === optionOne}
+          onChange={
+            please
+              ? () => OnChangeEmployeeForm(optionOne, title)
+              : () => OnChangeEmployeeForm(optionOne)
+          }
           className={`w-4 h-4     focus:ring-2  ${
             theme
               ? "focus:ring-blue-600 ring-offset-gray-800 bg-gray-700 border-gray-600"
@@ -33,7 +39,11 @@ export default function Radio({
       </div>
       <div className="flex items-center">
         <input
-          onChange={() => OnChangeEmployeeForm(optionTwo)}
+          onChange={
+            please
+              ? () => OnChangeEmployeeForm(optionTwo, title)
+              : () => OnChangeEmployeeForm(optionTwo)
+          }
           type="radio"
           checked={employeeGender === optionTwo}
           value={optionTwo}

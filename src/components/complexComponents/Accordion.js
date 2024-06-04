@@ -7,10 +7,13 @@ import axios from "axios";
 import { AgGridReact } from "ag-grid-react"; // AG Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
 import "ag-grid-community/styles/ag-theme-quartz.css";
-import { ToastContainer, toast } from "react-toastify";
 import ScanSubCategoryForm from "./ScanSubCategoryForm";
 import { FaTable } from "react-icons/fa6";
 import { GrGallery } from "react-icons/gr";
+import TableRow from "../tableComponents/TableRow";
+import { ToastContainer, toast } from "react-toastify";
+
+import GenerateForm from "./GenerateForm";
 
 import DragAndDropFileInput from "../simpleCoponents/DragAndDropFileInput";
 import AccordionTabs from "../Tabs/AccordionTabs";
@@ -27,32 +30,44 @@ export default function Accordion({
   employee_id,
 }) {
   let [vacancyData, setVacancyData] = useState([]);
+  const [subScanCategoryForms, setSubScanCategoryForms] = useState([]);
   const [accordionClicked, setAccordionClicked] = useState(false);
   const [vacancyLimitedData, setVacancyLimitedData] = useState([]);
   const [tab, setTab] = useState("add");
   const [viewType, setViewType] = useState("gallery");
   const [searchValue, setSearchValue] = useState("");
+  const [refresh, setRefresh] = useState(false);
   const pagination = true;
   const paginationPageSize = 20;
   const paginationPageSizeSelector = [20, 500, 100];
+
+  const [someFile, setSomeFile] = useState("");
+  const [clickedValue, setClickedValue] = useState("");
+  const [totalForms, setTotalForms] = useState("");
+
+  const [forGrid, setForGrid] = useState([]);
+
+  const OnChangeEmployeeForm = (title, e) => {
+    setSomeFile((prevState) => ({
+      ...prevState,
+      [title]: e.target.value,
+    }));
+  };
+
+  const onChangeDropdownForm = (val, title) => {
+    setClickedValue((prevState) => ({
+      ...prevState,
+      [title]: val,
+    }));
+  };
+
   useEffect(() => {
     getAllVacancyData();
     getLimitedVacancyData();
-  }, [files]);
+    getSubCategoryFormDetail();
+  }, [files, refresh]);
 
-  const [columnDefs] = useState([
-    {
-      headerName: "vacancy number",
-      flex: 1,
-      filter: true,
-      field: "vacancy_number",
-    },
-    {
-      headerName: "vacancy date",
-      flex: 1,
-      filter: true,
-      field: "vacancy_date",
-    },
+  const columnDefs = [
     {
       headerName: "File Name",
       flex: 1,
@@ -65,13 +80,42 @@ export default function Accordion({
       filter: true,
       field: "file_size",
     },
-  ]);
+    {
+      headerName: "Date",
+      flex: 1,
+      filter: true,
+      field: "date",
+    },
+    {
+      headerName: `File Order`,
+      flex: 1,
+      filter: true,
+      field: `File_Order`,
+    },
+    {
+      headerName: `Gosa Qormaata ykn Bu'aa`,
+      flex: 1,
+      filter: true,
+      field: `Gosa_Qormaata_ykn_Bu'aa`,
+      cellRenderer: (params) => {
+        return params.value ? params.value : " no data";
+      },
+    },
+  ];
+
   const getAllVacancyData = () => {
     axios
       .get(`${api_url}/vacancyRoute/${table}/${employee_id}`)
       .then(function (response) {
         setVacancyData(response.data);
       });
+  };
+
+  const getSubCategoryFormDetail = () => {
+    axios.get(`${api_url}/subScanCategory/${table}`).then(function (response) {
+      setSubScanCategoryForms(response.data);
+    });
+    setTotalForms(subScanCategoryForms.map((val) => val.subcategory_title));
   };
   const getLimitedVacancyData = () => {
     axios
@@ -91,8 +135,16 @@ export default function Accordion({
 
   async function handleMultipleSubmit(event) {
     event.preventDefault();
-    const url = `${api_url}/vacancyRoute/${employee_id}/${table}`;
+
+    const url = `${api_url}/vacancyRoute/${employee_id}/${table}/${totalForms}`;
     const formData = new FormData();
+    for (var i = 0; i < totalForms.length; i++) {
+      formData.append(
+        `${totalForms[i]}`,
+        someFile[totalForms[i]] || clickedValue[totalForms[i]]
+      );
+    }
+
     formData.append("vacancy", files[0]);
     const result = await axios({
       method: "post",
@@ -118,7 +170,7 @@ export default function Accordion({
   }
   return (
     <div>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <div>
         <h2>
           <button
@@ -160,6 +212,7 @@ export default function Accordion({
         {accordionClicked && (
           <div>
             <AccordionTabs theme={theme} tab={tab} setTab={setTab} />
+
             <div
               className={`p-5 border border-b-0   animate-bounce-slow ${
                 theme
@@ -169,16 +222,44 @@ export default function Accordion({
             >
               <div className="mb-2 text-gray-500 dark:text-gray-400">
                 {tab === "add" && (
-                  <DragAndDropFileInput
-                    api_url={api_url}
-                    theme={theme}
-                    handleMultipleSubmit={handleMultipleSubmit}
-                    handleDrop={handleDrop}
-                    files={files}
-                    handleMultipleChange={handleMultipleChange}
-                    handleRemoveFile={handleRemoveFile}
-                    vacancyLimitedData={vacancyLimitedData}
-                  />
+                  <div className="flex w-full gap-2 items-center justify-center">
+                    <div>
+                      <div
+                        className={`  border  rounded-3xl   ${
+                          theme
+                            ? "bg-gray-800 border-gray-400"
+                            : "bg-white border-gray-500"
+                        } `}
+                      >
+                        <div className="p-4  w-full flex flex-col gap-2 items-center justify-center">
+                          {subScanCategoryForms.map((val) => (
+                            <GenerateForm
+                              theme={theme}
+                              title={val.subcategory_title}
+                              inputType={val.input_type}
+                              options={val.options}
+                              someFile={someFile}
+                              setSomeFile={setSomeFile}
+                              setClickedValue={setClickedValue}
+                              clickedValue={clickedValue}
+                              onChangeDropdownForm={onChangeDropdownForm}
+                              OnChangeEmployeeForm={OnChangeEmployeeForm}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    <DragAndDropFileInput
+                      api_url={api_url}
+                      theme={theme}
+                      handleMultipleSubmit={handleMultipleSubmit}
+                      handleDrop={handleDrop}
+                      files={files}
+                      handleMultipleChange={handleMultipleChange}
+                      handleRemoveFile={handleRemoveFile}
+                      vacancyLimitedData={vacancyLimitedData}
+                    />
+                  </div>
                 )}
                 {tab === "view" && (
                   <div>
@@ -198,7 +279,7 @@ export default function Accordion({
                             searchValue={searchValue}
                           />
                         </div>
-                        <div className="grid p-5 grid-cols-2 md:grid-cols-3 gap-4">
+                        <div className="flex flex-wrap items-center justify-center p-1 gap-3">
                           {searchValue
                             ? vacancyData
                                 .filter((res) =>
@@ -208,7 +289,7 @@ export default function Accordion({
                                   <Gallery
                                     key={res.id}
                                     theme={theme}
-                                    title={res.vacancy_number}
+                                    title={res.File_Order}
                                     url={res.file_name}
                                     api_url={api_url}
                                   />
@@ -217,7 +298,7 @@ export default function Accordion({
                                 <Gallery
                                   key={res.id}
                                   theme={theme}
-                                  title={res.vacancy_number}
+                                  title={res.File_Order}
                                   url={res.file_name}
                                   api_url={api_url}
                                 />
@@ -248,7 +329,45 @@ export default function Accordion({
                 )}
 
                 {tab === "setting" && (
-                  <ScanSubCategoryForm api_url={api_url} theme={theme} />
+                  <div className="flex gap-3">
+                    <ScanSubCategoryForm
+                      api_url={api_url}
+                      theme={theme}
+                      table={table}
+                      setRefresh={setRefresh}
+                    />
+                    <div className="relative overflow-x-auto">
+                      <table
+                        className={`w-full text-sm text-left rtl:text-right   ${
+                          theme ? "text-gray-400" : "text-gray-500"
+                        }`}
+                      >
+                        <thead
+                          class={`text-xs  uppercase    ${
+                            theme
+                              ? "bg-gray-700 text-gray-400"
+                              : "text-gray-700 bg-gray-50"
+                          }`}
+                        ></thead>
+                        <tbody>
+                          {subScanCategoryForms.map((val) => (
+                            <TableRow
+                              key={val.id}
+                              theme={theme}
+                              id={val.id}
+                              title={val.subcategory_title}
+                              color={val.input_type}
+                              displayOrder={val.options}
+                              date={val.date}
+                              table={val.table_name}
+                              // onDeleteScanCategoryClicked={onDeleteScanCategoryClicked}
+                              // onEditScanCategoryClicked={onEditScanCategoryClicked}
+                            />
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 )}
               </div>
             </div>

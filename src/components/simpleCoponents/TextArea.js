@@ -13,6 +13,7 @@ export default function TextArea({
         onChange={(e) => onChangeTextArea(e)}
         name={name}
         value={value}
+        required
         rows="6"
         className={`block p-2.5 w-full text-sm   rounded-lg border   ${
           theme

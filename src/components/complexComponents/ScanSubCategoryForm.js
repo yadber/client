@@ -1,23 +1,78 @@
 import React, { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 import FloatingLabel from "../simpleCoponents/FloatingLabel";
 import SimpleDropdown from "../simpleCoponents/SimpleDropdown";
 import TextArea from "../simpleCoponents/TextArea";
+import axios from "axios";
 
 export default function ScanSubCategoryForm({
   theme,
   api_url,
   editMode,
-  onSubmitFormAdd,
+  table,
   onSubmitFormEdit,
+  setRefresh,
 }) {
   const [clickedValue, setClickedValue] = useState("Form Type");
   const [textAreaOptions, setTextAreaOptions] = useState("");
   const [subCategoryTitle, setSubCategoryTitle] = useState("");
+
   const onChangeTextArea = (e) => {
     setTextAreaOptions(e.target.value);
   };
   const OnChangeSubCategoryTitleForm = (e) => {
     setSubCategoryTitle(e.target.value);
+  };
+
+  const onSubmitFormAdd = (e) => {
+    e.preventDefault();
+    if (clickedValue !== "Form Type") {
+      const subCategoryForm = {
+        clickedValue,
+        textAreaOptions,
+        subCategoryTitle,
+      };
+
+      axios
+        .post(`${api_url}/subScanCategory/${table}`, subCategoryForm)
+        .then((response) => {
+          if (response.data === "duplicate") {
+            toast.warning("Duplicated sub category title", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              theme: "colored",
+            });
+          } else {
+            setRefresh((prevState) => !prevState);
+            setClickedValue("Form Type");
+            setTextAreaOptions("");
+            setSubCategoryTitle("");
+            toast.success("Sub category saved", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              theme: "colored",
+            });
+          }
+        });
+    } else {
+      toast.warning("Form Type Can not be empty", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
+    }
   };
 
   return (
@@ -26,6 +81,7 @@ export default function ScanSubCategoryForm({
         theme ? "bg-gray-800" : "bg-white"
       } `}
     >
+      <ToastContainer />
       <form
         onSubmit={
           !editMode ? (e) => onSubmitFormAdd(e) : (e) => onSubmitFormEdit(e)

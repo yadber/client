@@ -8,7 +8,7 @@ export default function Gallery({ api_url, dragAndDrop, theme, url, title }) {
         className={`rounded-lg ${
           dragAndDrop
             ? "w-20 h-20"
-            : "w-60 h-40 md:w-[25rem] md:h-[20rem] rounded-lg"
+            : "w-60 h-50 md:w-[18rem] md:h-[22rem] rounded-lg"
         }`}
         src={`${api_url}/Documents/VacancyDocuments/${url}`}
         alt=""

@@ -7,6 +7,10 @@ export default function SimpleDropdown({
   optionOne,
   optionTwo,
   optionThree,
+  multipleOptions,
+  onChangeDropdownForm,
+  optionOneByOne,
+  title,
 }) {
   const [dropdownClicked, setDropdownClicked] = useState(false);
 
@@ -38,50 +42,74 @@ export default function SimpleDropdown({
             theme ? "text-gray-200" : "text-gray-700"
           }`}
         >
-          <li
-            onClick={() => setClickedValue(optionOne ? optionOne : "Dhaabbii")}
-          >
-            <p
-              className={`block px-4 py-2   ${
-                theme
-                  ? "hover:bg-gray-600 hover:text-white"
-                  : "hover:bg-gray-100"
-              }`}
-              onClick={() => setDropdownClicked(false)}
-            >
-              {optionOne ? optionOne : "Dhaabbii"}
-            </p>
-          </li>
-          <li
-            onClick={() => setClickedValue(optionTwo ? optionTwo : "Freelance")}
-          >
-            <p
-              className={`block px-4 py-2   ${
-                theme
-                  ? "hover:bg-gray-600 hover:text-white"
-                  : "hover:bg-gray-100"
-              }`}
-              onClick={() => setDropdownClicked(false)}
-            >
-              {optionTwo ? optionTwo : "Freelance"}
-            </p>
-          </li>
-          <li
-            onClick={() =>
-              setClickedValue(optionThree ? optionThree : "Contract")
-            }
-          >
-            <p
-              className={`block px-4 py-2   ${
-                theme
-                  ? "hover:bg-gray-600 hover:text-white"
-                  : "hover:bg-gray-100"
-              }`}
-              onClick={() => setDropdownClicked(false)}
-            >
-              {optionThree ? optionThree : "Contract"}
-            </p>
-          </li>
+          {!multipleOptions && (
+            <>
+              <li
+                onClick={() =>
+                  setClickedValue(optionOne ? optionOne : "Dhaabbii")
+                }
+              >
+                <p
+                  className={`block px-4 py-2   ${
+                    theme
+                      ? "hover:bg-gray-600 hover:text-white"
+                      : "hover:bg-gray-100"
+                  }`}
+                  onClick={() => setDropdownClicked(false)}
+                >
+                  {optionOne ? optionOne : "Dhaabbii"}
+                </p>
+              </li>
+              <li
+                onClick={() =>
+                  setClickedValue(optionTwo ? optionTwo : "Freelance")
+                }
+              >
+                <p
+                  className={`block px-4 py-2   ${
+                    theme
+                      ? "hover:bg-gray-600 hover:text-white"
+                      : "hover:bg-gray-100"
+                  }`}
+                  onClick={() => setDropdownClicked(false)}
+                >
+                  {optionTwo ? optionTwo : "Freelance"}
+                </p>
+              </li>
+              <li
+                onClick={() =>
+                  setClickedValue(optionThree ? optionThree : "Contract")
+                }
+              >
+                <p
+                  className={`block px-4 py-2   ${
+                    theme
+                      ? "hover:bg-gray-600 hover:text-white"
+                      : "hover:bg-gray-100"
+                  }`}
+                  onClick={() => setDropdownClicked(false)}
+                >
+                  {optionThree ? optionThree : "Contract"}
+                </p>
+              </li>{" "}
+            </>
+          )}
+
+          {multipleOptions &&
+            optionOneByOne.map((val) => (
+              <li key={val} onClick={() => onChangeDropdownForm(val, title)}>
+                <p
+                  className={`block px-4 py-2   ${
+                    theme
+                      ? "hover:bg-gray-600 hover:text-white"
+                      : "hover:bg-gray-100"
+                  }`}
+                  onClick={() => setDropdownClicked(false)}
+                >
+                  {val}
+                </p>
+              </li>
+            ))}
         </ul>
       </div>
     </div>

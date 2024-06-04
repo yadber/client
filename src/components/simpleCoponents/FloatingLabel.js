@@ -9,6 +9,7 @@ export default function FloatingLabel({
   OnChangeEmployeeForm,
   upperCase,
   fullNameValidation,
+  please,
 }) {
   return (
     <div className="relative">
@@ -16,7 +17,11 @@ export default function FloatingLabel({
         required
         name={name}
         value={employeeFormData}
-        onChange={(e) => OnChangeEmployeeForm(e)}
+        onChange={
+          please
+            ? (e) => OnChangeEmployeeForm(title, e)
+            : (e) => OnChangeEmployeeForm(e)
+        }
         type={type ? type : "text"}
         className={`block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm    border-0 border-b-2  appearance-none   focus:outline-none focus:ring-0  peer 
         ${upperCase && "uppercase w-[18rem]"}
