@@ -56,6 +56,22 @@ export default function ModalTabs({ theme, clickedTab, setClickedTab }) {
             Settings
           </div>
         </li>
+        <li className="me-2">
+          <div
+            className={`inline-block p-4 border-b-2 border-transparent rounded-t-lg cursor-pointer ${
+              clickedTab === "Gallery" && "text-blue-500 border-blue-500"
+            } border-blue-500"   ${
+              theme
+                ? "hover:text-gray-300"
+                : "hover:text-gray-600 hover:border-gray-300"
+            }`}
+            onClick={() => {
+              setClickedTab("Gallery");
+            }}
+          >
+            Gallery
+          </div>
+        </li>
       </ul>
     </div>
   );

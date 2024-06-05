@@ -45,13 +45,17 @@ export default function Accordion({
   const [clickedValue, setClickedValue] = useState("");
   const [totalForms, setTotalForms] = useState("");
 
-  const [forGrid, setForGrid] = useState([]);
+  const [editMode, setEditMode] = useState(false);
 
   const OnChangeEmployeeForm = (title, e) => {
     setSomeFile((prevState) => ({
       ...prevState,
       [title]: e.target.value,
     }));
+  };
+
+  const onEditScanCategoryClicked = () => {
+    setEditMode((prevState) => !prevState);
   };
 
   const onChangeDropdownForm = (val, title) => {
@@ -334,6 +338,7 @@ export default function Accordion({
                       api_url={api_url}
                       theme={theme}
                       table={table}
+                      editMode={editMode}
                       setRefresh={setRefresh}
                     />
                     <div className="relative overflow-x-auto">
@@ -361,7 +366,9 @@ export default function Accordion({
                               date={val.date}
                               table={val.table_name}
                               // onDeleteScanCategoryClicked={onDeleteScanCategoryClicked}
-                              // onEditScanCategoryClicked={onEditScanCategoryClicked}
+                              onEditScanCategoryClicked={
+                                onEditScanCategoryClicked
+                              }
                             />
                           ))}
                         </tbody>

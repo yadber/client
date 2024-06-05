@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MdCancel } from "react-icons/md";
 import ModalTabs from "../Tabs/ModalTabs";
-
+import axios from "axios";
+import Gallery from "../simpleCoponents/Gallery";
 import Vacancy from "../../pages/dms/Vacancy";
 import ScanCategorySetting from "../setting/ScanCategorySetting";
 export default function Modal({
@@ -13,6 +14,17 @@ export default function Modal({
   theme,
 }) {
   const [clickedTab, setClickedTab] = useState("scan");
+  let [vacancyData, setVacancyData] = useState([]);
+
+  useEffect(() => {
+    getAllVacancyData();
+  }, []);
+
+  const getAllVacancyData = () => {
+    axios.get(`${api_url}/vacancyRoute/${id}`).then(function (response) {
+      setVacancyData(response.data);
+    });
+  };
   return (
     <>
       <div className="overflow-y-auto overflow-x-hidden fixed mt-10 top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -81,6 +93,21 @@ export default function Modal({
                   >
                     <ScanCategorySetting theme={theme} api_url={api_url} />
                   </p>
+                )}
+
+                {clickedTab === "Gallery" && (
+                  <div className="flex flex-wrap items-center justify-center p-1 gap-3">
+                    {vacancyData.map((res) => (
+                      <Gallery
+                        key={res.id}
+                        theme={theme}
+                        title={res.File_Order}
+                        url={res.file_name}
+                        api_url={api_url}
+                        PDF={true}
+                      />
+                    ))}
+                  </div>
                 )}
               </div>
             </div>
