@@ -12,11 +12,48 @@ import { FaTable } from "react-icons/fa6";
 import { GrGallery } from "react-icons/gr";
 import TableRow from "../tableComponents/TableRow";
 import { ToastContainer, toast } from "react-toastify";
-
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 import GenerateForm from "./GenerateForm";
 
 import DragAndDropFileInput from "../simpleCoponents/DragAndDropFileInput";
 import AccordionTabs from "../Tabs/AccordionTabs";
+
+function ToastSuccess(title) {
+  return toast.success(`${title}`, {
+    position: "top-center",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "colored",
+  });
+}
+
+function ToastWarning(title) {
+  return toast.info(`${title}`, {
+    position: "top-center",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "colored",
+  });
+}
+
+function ToastDanger(title) {
+  return toast.warning(`${title}`, {
+    position: "top-center",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "colored",
+  });
+}
 export default function Accordion({
   theme,
   accordionTitle,
@@ -40,12 +77,20 @@ export default function Accordion({
   const pagination = true;
   const paginationPageSize = 20;
   const paginationPageSizeSelector = [20, 500, 100];
-
   const [someFile, setSomeFile] = useState("");
   const [clickedValue, setClickedValue] = useState("");
   const [totalForms, setTotalForms] = useState("");
-
+  const [clickedValueTwo, setClickedValueTwo] = useState("Form Type");
+  const [textAreaOptions, setTextAreaOptions] = useState("");
+  const [subCategoryTitle, setSubCategoryTitle] = useState("");
   const [editMode, setEditMode] = useState(false);
+  const [tableId, setTableId] = useState(1);
+
+  useEffect(() => {
+    getAllVacancyData();
+    getLimitedVacancyData();
+    getSubCategoryFormDetail();
+  }, [files, refresh]);
 
   const OnChangeEmployeeForm = (title, e) => {
     setSomeFile((prevState) => ({
@@ -53,9 +98,91 @@ export default function Accordion({
       [title]: e.target.value,
     }));
   };
+  const onChangeTextArea = (e) => {
+    setTextAreaOptions(e.target.value);
+  };
+  const OnChangeSubCategoryTitleForm = (e) => {
+    setSubCategoryTitle(e.target.value);
+  };
 
-  const onEditScanCategoryClicked = () => {
-    setEditMode((prevState) => !prevState);
+  const onEditSubScanCategoryClicked = (id) => {
+    setTableId(id);
+    setEditMode(true);
+    const EditedDate = subScanCategoryForms.filter((val) => val.id === id);
+    setClickedValueTwo(EditedDate[0].input_type);
+    setTextAreaOptions(EditedDate[0].options);
+    setSubCategoryTitle(EditedDate[0].subcategory_title);
+  };
+
+  const onSubmitFormEdit = (e) => {
+    e.preventDefault();
+    const id = tableId;
+    const subCategoryForm = {
+      clickedValueTwo,
+      textAreaOptions,
+      subCategoryTitle,
+    };
+    axios
+      .post(`${api_url}/subScanCategory/${id}/${table}`, subCategoryForm)
+      .then((response) => {
+        if (response.data === "duplicate") {
+          ToastWarning("Duplicated Category Name!");
+        } else {
+          setRefresh((prevState) => !prevState);
+          ToastSuccess("Category updated successfully!");
+          cancelEditMode();
+        }
+      });
+  };
+
+  const onSubmitFormAdd = (e) => {
+    e.preventDefault();
+    if (clickedValueTwo !== "Form Type") {
+      const subCategoryForm = {
+        clickedValueTwo,
+        textAreaOptions,
+        subCategoryTitle,
+      };
+      axios
+        .post(`${api_url}/subScanCategory/${table}`, subCategoryForm)
+        .then((response) => {
+          if (response.data === "duplicate") {
+            toast.warning("Duplicated sub category title", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              theme: "colored",
+            });
+          } else {
+            setRefresh((prevState) => !prevState);
+            setClickedValueTwo("Form Type");
+            setTextAreaOptions("");
+            setSubCategoryTitle("");
+            toast.success("Sub category saved", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              theme: "colored",
+            });
+          }
+        });
+    } else {
+      toast.warning("Form Type Can not be empty", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
+    }
   };
 
   const onChangeDropdownForm = (val, title) => {
@@ -64,12 +191,6 @@ export default function Accordion({
       [title]: val,
     }));
   };
-
-  useEffect(() => {
-    getAllVacancyData();
-    getLimitedVacancyData();
-    getSubCategoryFormDetail();
-  }, [files, refresh]);
 
   const columnDefs = [
     {
@@ -172,9 +293,40 @@ export default function Accordion({
       });
     }
   }
+  const cancelEditMode = () => {
+    setEditMode(false);
+    setClickedValueTwo("Form Type");
+    setTextAreaOptions("");
+    setSubCategoryTitle("");
+  };
+  const onDeleteScanCategoryClicked = (id) => {
+    confirmAlert({
+      title: "Confirm to submit",
+      message: "Are you sure to DELETE this?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () =>
+            axios
+              .delete(`${api_url}/subScanCategory/${id}/${table}`)
+              .then((response) => {
+                if (response.data === "CantDelete") {
+                  ToastWarning("Can Not Delete");
+                } else {
+                  ToastDanger("Deleted successfully!");
+                  setRefresh((prevState) => !prevState);
+                }
+              }),
+        },
+        {
+          label: "No",
+          onClick: () => "",
+        },
+      ],
+    });
+  };
   return (
     <div>
-      {/* <ToastContainer /> */}
       <div>
         <h2>
           <button
@@ -335,11 +487,25 @@ export default function Accordion({
                 {tab === "setting" && (
                   <div className="flex gap-3">
                     <ScanSubCategoryForm
+                      onChangeTextArea={onChangeTextArea}
+                      OnChangeSubCategoryTitleForm={
+                        OnChangeSubCategoryTitleForm
+                      }
+                      onSubmitFormAdd={onSubmitFormAdd}
+                      setClickedValueTwo={setClickedValueTwo}
+                      setTextAreaOptions={setTextAreaOptions}
+                      setSubCategoryTitle={setSubCategoryTitle}
                       api_url={api_url}
                       theme={theme}
                       table={table}
                       editMode={editMode}
+                      setEditMode={setEditMode}
                       setRefresh={setRefresh}
+                      clickedValueTwo={clickedValueTwo}
+                      textAreaOptions={textAreaOptions}
+                      subCategoryTitle={subCategoryTitle}
+                      cancelEditMode={cancelEditMode}
+                      onSubmitFormEdit={onSubmitFormEdit}
                     />
                     <div className="relative overflow-x-auto">
                       <table
@@ -365,9 +531,11 @@ export default function Accordion({
                               displayOrder={val.options}
                               date={val.date}
                               table={val.table_name}
-                              // onDeleteScanCategoryClicked={onDeleteScanCategoryClicked}
+                              onDeleteScanCategoryClicked={
+                                onDeleteScanCategoryClicked
+                              }
                               onEditScanCategoryClicked={
-                                onEditScanCategoryClicked
+                                onEditSubScanCategoryClicked
                               }
                             />
                           ))}

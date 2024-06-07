@@ -1,27 +1,12 @@
 import React from "react";
-import { toast, ToastContainer } from "react-toastify";
-import FloatingLabel from "../simpleCoponents/FloatingLabel";
-import SimpleDropdown from "../simpleCoponents/SimpleDropdown";
-import TextArea from "../simpleCoponents/TextArea";
-import axios from "axios";
+import FloatingLabel from "../../simpleCoponents/FloatingLabel";
 
-export default function ScanSubCategoryForm({
+export default function ObnStructureForm({
   theme,
-  api_url,
   editMode,
-  table,
-  setRefresh,
-  setEditMode,
-  refresh,
-  clickedValueTwo,
-  textAreaOptions,
-  subCategoryTitle,
-  onChangeTextArea,
-  OnChangeSubCategoryTitleForm,
-  setClickedValueTwo,
-  setTextAreaOptions,
-  setSubCategoryTitle,
   cancelEditMode,
+  OnChangeStructureForm,
+  structureForm,
   onSubmitFormAdd,
   onSubmitFormEdit,
 }) {
@@ -31,41 +16,46 @@ export default function ScanSubCategoryForm({
         theme ? "bg-gray-800" : "bg-white"
       } `}
     >
-      <ToastContainer />
       <form
         onSubmit={
           !editMode ? (e) => onSubmitFormAdd(e) : (e) => onSubmitFormEdit(e)
         }
       >
-        <div className=" p-3 w-full flex flex-col gap-2 items-center">
+        <div className=" p-3 w-full flex flex-col gap-2">
           <FloatingLabel
             theme={theme}
-            title="Sub Category Title"
-            name="category_title"
+            title="Title Category"
+            name="title_category"
             type="text"
-            employeeFormData={subCategoryTitle}
-            OnChangeEmployeeForm={OnChangeSubCategoryTitleForm}
+            employeeFormData={structureForm.title_category}
+            OnChangeEmployeeForm={OnChangeStructureForm}
           />
-
-          <SimpleDropdown
-            setClickedValue={setClickedValueTwo}
+          <FloatingLabel
+            title="Title"
+            name="title"
+            type="text"
             theme={theme}
-            clickedValue={clickedValueTwo}
-            optionOne={"TextInput"}
-            optionTwo={"Dropdown"}
-            optionThree={"CheckBox"}
+            employeeFormData={structureForm.title}
+            OnChangeEmployeeForm={OnChangeStructureForm}
           />
-          {clickedValueTwo !== "TextInput" && (
-            <TextArea
-              placeholder={"options should have a space between"}
-              theme={theme}
-              name={"options"}
-              onChangeTextArea={onChangeTextArea}
-              value={textAreaOptions}
-            />
-          )}
+          <FloatingLabel
+            title="Subcategory of"
+            name="sub_category_of"
+            type="text"
+            theme={theme}
+            employeeFormData={structureForm.sub_category_of}
+            OnChangeEmployeeForm={OnChangeStructureForm}
+            required={false}
+          />
+          <FloatingLabel
+            title="The Leader"
+            name="leader"
+            type="text"
+            theme={theme}
+            employeeFormData={structureForm.leader}
+            OnChangeEmployeeForm={OnChangeStructureForm}
+          />
         </div>
-
         <div className="flex items-center before:border-t  before:flex-1 before:border-gray-300 after:border-t  after:flex-1 after:border-gray-300"></div>
         <div className="p-4">
           <button

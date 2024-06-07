@@ -4,8 +4,13 @@ import { FaBars } from "react-icons/fa";
 
 import { MdDarkMode } from "react-icons/md";
 import { MdOutlineLightMode } from "react-icons/md";
-export default function NavBarMenu({ theme, api_url, setIsDarkTheme }) {
-  const [navbarMenu, setNavbarMenu] = useState("home");
+export default function NavBarMenu({
+  theme,
+  api_url,
+  setIsDarkTheme,
+  NavbarMenu,
+  setNavbarMenu,
+}) {
   const [mobileNavbar, setMobileNavbar] = useState(false);
   return (
     <nav
@@ -49,14 +54,12 @@ export default function NavBarMenu({ theme, api_url, setIsDarkTheme }) {
           >
             <li>
               <div
-                className={`block py-2 px-3 ${
-                  navbarMenu === "home" && "text-blue-500"
-                }  cursor-pointer rounded  md:border-0  md:p-0      ${
+                className={`block py-2 px-3  cursor-pointer rounded  md:border-0  md:p-0      ${
                   theme
                     ? "hover:text-white hover:bg-gray-700 text-white md:hover:bg-transparent md:hover:text-blue-500"
                     : "text-gray-900 hover:bg-gray-100 md:hover:text-blue-700 md:hover:bg-transparent"
-                }`}
-                onClick={() => setNavbarMenu("home")}
+                } ${NavbarMenu === "Home" && "text-xl"} `}
+                onClick={() => setNavbarMenu("Home")}
               >
                 Home
               </div>
@@ -65,21 +68,21 @@ export default function NavBarMenu({ theme, api_url, setIsDarkTheme }) {
             <li>
               <div
                 className={`block py-2 px-3 cursor-pointer  rounded  md:border-0  md:p-0  ${
-                  navbarMenu === "services" && "text-blue-500"
+                  NavbarMenu === "Setting" && "text-xl"
                 }     ${
                   theme
                     ? "hover:text-white hover:bg-gray-700 text-white md:hover:bg-transparent md:hover:text-blue-500"
                     : "text-gray-900 hover:bg-gray-100 md:hover:text-blue-700 md:hover:bg-transparent "
                 }`}
-                onClick={() => setNavbarMenu("services")}
+                onClick={() => setNavbarMenu("Setting")}
               >
-                Services
+                Setting
               </div>
             </li>
             <li>
               <div
                 className={`block py-2 px-3  cursor-pointer rounded  md:border-0  md:p-0 ${
-                  navbarMenu === "pricing" && "text-blue-500"
+                  NavbarMenu === "pricing" && "text-xl"
                 }      ${
                   theme
                     ? "hover:text-white hover:bg-gray-700 text-white md:hover:bg-transparent md:hover:text-blue-500"
@@ -93,7 +96,7 @@ export default function NavBarMenu({ theme, api_url, setIsDarkTheme }) {
             <li>
               <div
                 className={`block py-2 px-3 cursor-pointer  rounded  md:border-0  md:p-0   ${
-                  navbarMenu === "contact" && "text-blue-500"
+                  NavbarMenu === "contact" && "text-xl"
                 }     ${
                   theme
                     ? "hover:text-white hover:bg-gray-700 text-white md:hover:bg-transparent md:hover:text-blue-500"

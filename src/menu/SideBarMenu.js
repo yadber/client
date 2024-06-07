@@ -8,6 +8,7 @@ export default function SideBarMenu({
   api_url,
   setSidebarMenu,
   sideBarMenu,
+  MenuOptions,
 }) {
   const [mobileSidebarMenuClicked, setMobileSidebarMenu] = useState(false);
 
@@ -40,89 +41,112 @@ export default function SideBarMenu({
             theme ? "bg-gray-800" : "bg-gray-50 "
           }`}
         >
-          <ul className="space-y-2 font-medium">
-            <li>
-              <div
-                className={`flex items-center p-2  rounded-lg    group ${
-                  theme
-                    ? "text-white hover:bg-gray-700"
-                    : "text-gray-900 hover:bg-gray-100"
-                }`}
-              >
-                <span className="ms-3">Dashboard</span>
-              </div>
-            </li>
+          {!MenuOptions ? (
+            <ul className="space-y-2 font-medium">
+              <li>
+                <div
+                  className={`flex items-center p-2  rounded-lg    group ${
+                    theme
+                      ? "text-white hover:bg-gray-700"
+                      : "text-gray-900 hover:bg-gray-100"
+                  }`}
+                >
+                  <span className="ms-3">Dashboard</span>
+                </div>
+              </li>
 
-            <li>
-              <div
-                className={`flex items-center p-2  rounded-lg group
+              <li>
+                <div
+                  className={`flex items-center p-2  rounded-lg group
                 ${sideBarMenu === "hr" && "bg-blue-400"}
                 ${
                   theme
                     ? "text-white hover:bg-gray-700"
                     : "text-gray-900 hover:bg-gray-100"
                 }`}
-                onClick={() => setSidebarMenu("hr")}
-              >
-                <span className="ms-3">HR</span>
-              </div>
-            </li>
+                  onClick={() => setSidebarMenu("hr")}
+                >
+                  <span className="ms-3">HR</span>
+                </div>
+              </li>
 
-            <li>
-              <div
-                className={`flex items-center p-2  rounded-lg    group
+              <li>
+                <div
+                  className={`flex items-center p-2  rounded-lg    group
                 ${sideBarMenu === "dms" && "bg-blue-400"} ${
-                  theme
-                    ? "text-white hover:bg-gray-700"
-                    : "text-gray-900 hover:bg-gray-100"
-                }`}
-                onClick={() => setSidebarMenu("dms")}
-              >
-                <span className="ms-3">DMS</span>
-              </div>
-            </li>
+                    theme
+                      ? "text-white hover:bg-gray-700"
+                      : "text-gray-900 hover:bg-gray-100"
+                  }`}
+                  onClick={() => setSidebarMenu("dms")}
+                >
+                  <span className="ms-3">DMS</span>
+                </div>
+              </li>
 
-            <li>
-              <div
-                className={`flex items-center p-2  rounded-lg   group ${
+              <li>
+                <div
+                  className={`flex items-center p-2  rounded-lg   group ${
+                    theme
+                      ? "text-white hover:bg-gray-700"
+                      : "text-gray-900  hover:bg-gray-100"
+                  }`}
+                >
+                  <span className="flex-1 ms-3 whitespace-nowrap">
+                    Notification
+                  </span>
+                  <span
+                    className={`inline-flex items-center justify-center px-2 ms-3 text-sm font-medium  rounded-full ${
+                      theme
+                        ? "bg-gray-700 text-gray-300 "
+                        : "text-gray-800 bg-gray-100"
+                    }`}
+                  >
+                    Pro
+                  </span>
+                </div>
+              </li>
+              <li>
+                <div
+                  className={`flex items-center p-2  rounded-lg  group ${
+                    theme
+                      ? "text-white  hover:bg-gray-700"
+                      : "text-gray-900 hover:bg-gray-100"
+                  }`}
+                >
+                  <span className="flex-1 ms-3 whitespace-nowrap">Inbox</span>
+                  <span
+                    className={`inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium  rounded-full  ${
+                      theme
+                        ? "bg-blue-900 text-blue-300"
+                        : "text-blue-800 bg-blue-100"
+                    }`}
+                  >
+                    3
+                  </span>
+                </div>
+              </li>
+            </ul>
+          ) : (
+            <ul className="space-y-2 font-medium">
+              {MenuOptions.map((val) => (
+                <li>
+                  <div
+                    className={`flex items-center p-2  rounded-lg group
+                ${sideBarMenu === val && "bg-blue-400"}
+                ${
                   theme
                     ? "text-white hover:bg-gray-700"
-                    : "text-gray-900  hover:bg-gray-100"
-                }`}
-              >
-                <span className="flex-1 ms-3 whitespace-nowrap">Kanban</span>
-                <span
-                  className={`inline-flex items-center justify-center px-2 ms-3 text-sm font-medium  rounded-full ${
-                    theme
-                      ? "bg-gray-700 text-gray-300 "
-                      : "text-gray-800 bg-gray-100"
-                  }`}
-                >
-                  Pro
-                </span>
-              </div>
-            </li>
-            <li>
-              <div
-                className={`flex items-center p-2  rounded-lg  group ${
-                  theme
-                    ? "text-white  hover:bg-gray-700"
                     : "text-gray-900 hover:bg-gray-100"
                 }`}
-              >
-                <span className="flex-1 ms-3 whitespace-nowrap">Inbox</span>
-                <span
-                  className={`inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium  rounded-full  ${
-                    theme
-                      ? "bg-blue-900 text-blue-300"
-                      : "text-blue-800 bg-blue-100"
-                  }`}
-                >
-                  3
-                </span>
-              </div>
-            </li>
-          </ul>
+                    onClick={() => setSidebarMenu(val)}
+                  >
+                    <span className="ms-3">{val}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </div>
