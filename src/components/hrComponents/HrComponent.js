@@ -19,10 +19,10 @@ export default function HrComponent({ theme, api_url, forDms }) {
   const [phoneNumberValidation, setPhoneNumberValidation] = useState(false);
   const [fullNameValidation, setFullNameValidation] = useState(false);
   const [imageValidation, setImageValidation] = useState(false);
+  const [allMuummee, setAllMuummee] = useState([]);
   const [employeeFormData, setEmployeeFormData] = useState({
     file_number: "",
     full_name: "",
-    muummee: "",
     phone_number: "",
   });
   const [modalNameAndId, setModalNameAndId] = useState({
@@ -32,6 +32,7 @@ export default function HrComponent({ theme, api_url, forDms }) {
 
   const [editClicked, setEditClicked] = useState(false);
   const [oldProfile, setOldProfile] = useState("");
+  const [clickedValueTwo, setClickedValueTwo] = useState("Select Muummee");
 
   useEffect(() => {
     async function getEmployeeData() {
@@ -40,6 +41,7 @@ export default function HrComponent({ theme, api_url, forDms }) {
       setEmployeeData(employeeDataFromServer);
     }
     getEmployeeData();
+    getAllMuummee();
   }, [refresh]);
 
   function OnChangeEmployeeForm(e) {
@@ -49,6 +51,16 @@ export default function HrComponent({ theme, api_url, forDms }) {
       [element.name]: element.value,
     }));
   }
+
+  const getAllMuummee = () => {
+    axios.get(`${api_url}/obnStructure/getMuummee`).then(function (response) {
+      setAllMuummee(response.data);
+    });
+  };
+
+  const onChangeDropdownForm = (val, title) => {
+    setClickedValueTwo(val.muummee);
+  };
 
   function onRadioClicked(value) {
     setEmployeeGender(value);
@@ -83,7 +95,7 @@ export default function HrComponent({ theme, api_url, forDms }) {
       employeeProfile === "" ||
       employeeFormData.file_number === "" ||
       employeeFormData.full_name === "" ||
-      employeeFormData.muumee === "" ||
+      clickedValueTwo === "Select Muummee" ||
       employeeFormData.phone_number === "" ||
       clickedValue === ""
     ) {
@@ -101,7 +113,7 @@ export default function HrComponent({ theme, api_url, forDms }) {
       formData.append("image", employeeProfile);
       formData.append("file_number", employeeFormData.file_number);
       formData.append("full_name", employeeFormData.full_name);
-      formData.append("muummee", employeeFormData.muummee);
+      formData.append("muummee", clickedValueTwo);
       formData.append("employee_type", clickedValue);
       formData.append("phone_number", employeeFormData.phone_number);
       formData.append("gender", employeeGender);
@@ -120,9 +132,10 @@ export default function HrComponent({ theme, api_url, forDms }) {
         setEmployeeFormData({
           file_number: "",
           full_name: "",
-          muummee: "",
+
           phone_number: "",
         });
+        setClickedValueTwo("Select Muummee");
         setClickedValue("");
         setEmployeeProfile("");
         setEmployeeGender("Dhiira");
@@ -179,9 +192,11 @@ export default function HrComponent({ theme, api_url, forDms }) {
     setEmployeeFormData({
       file_number: EditData[0].file_number,
       full_name: EditData[0].full_name,
-      muummee: EditData[0].Muummee,
+
       phone_number: EditData[0].phone_number,
     });
+
+    setClickedValueTwo(EditData[0].Muummee);
     setEmployeeGender(EditData[0].Gender);
     setClickedValue(EditData[0].type);
     setOldProfile(EditData[0].profile);
@@ -215,7 +230,7 @@ export default function HrComponent({ theme, api_url, forDms }) {
       employeeProfile === "" ||
       employeeFormData.file_number === "" ||
       employeeFormData.full_name === "" ||
-      employeeFormData.muumee === "" ||
+      clickedValueTwo === "Select Muummee" ||
       employeeFormData.phone_number === "" ||
       clickedValue === ""
     ) {
@@ -233,7 +248,6 @@ export default function HrComponent({ theme, api_url, forDms }) {
       formData.append("image", employeeProfile);
       formData.append("file_number", employeeFormData.file_number);
       formData.append("full_name", employeeFormData.full_name);
-      formData.append("muummee", employeeFormData.muummee);
       formData.append("employee_type", clickedValue);
       formData.append("phone_number", employeeFormData.phone_number);
       formData.append("gender", employeeGender);
@@ -242,6 +256,7 @@ export default function HrComponent({ theme, api_url, forDms }) {
         employeeFormData,
         clickedValue,
         employeeGender,
+        clickedValueTwo,
       };
 
       const result = await axios({
@@ -295,9 +310,9 @@ export default function HrComponent({ theme, api_url, forDms }) {
     setEmployeeFormData({
       file_number: "",
       full_name: "",
-      muummee: "",
       phone_number: "",
     });
+    setClickedValueTwo("Select Muummee");
     setEmployeeGender("");
     setClickedValue("");
     setEmployeeProfile("");
@@ -323,8 +338,11 @@ export default function HrComponent({ theme, api_url, forDms }) {
           employeeFormData={employeeFormData}
           employeeGender={employeeGender}
           clickedValue={clickedValue}
+          clickedValueTwo={clickedValueTwo}
           setClickedValue={setClickedValue}
           editClicked={editClicked}
+          allMuummee={allMuummee}
+          onChangeDropdownForm={onChangeDropdownForm}
           CancelEditMode={CancelEditMode}
         />
       )}

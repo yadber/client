@@ -26,6 +26,9 @@ export default function AddEmployeeFrom({
   editClicked,
   CancelEditMode,
   OnUpdateButtonClick,
+  allMuummee,
+  onChangeDropdownForm,
+  clickedValueTwo,
 }) {
   return (
     <div className="flex flex-wrap gap-2 border-2 p-2 border-gray-500 justify-center items-center font-serif">
@@ -53,17 +56,19 @@ export default function AddEmployeeFrom({
         OnChangeEmployeeForm={onRadioClicked}
         employeeGender={employeeGender}
       />
-      <FloatingLabel
-        theme={theme}
-        title={"Muummee"}
-        name="muummee"
-        OnChangeEmployeeForm={OnChangeEmployeeForm}
-        employeeFormData={employeeFormData.muummee}
-      />
+
       <SimpleDropdown
         theme={theme}
         clickedValue={clickedValue}
         setClickedValue={setClickedValue}
+      />
+      <SimpleDropdown
+        theme={theme}
+        clickedValue={clickedValueTwo}
+        multipleOptions={true}
+        muummee={true}
+        optionOneByOne={allMuummee}
+        onChangeDropdownForm={onChangeDropdownForm}
       />
       <div className="flex justify-center items-center gap-3 ">
         <div>

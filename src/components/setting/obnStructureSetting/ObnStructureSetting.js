@@ -51,6 +51,7 @@ export default function ObnStructureSetting({ theme, api_url }) {
     maqaa: "",
   });
   const [obnStructure, setObnStructure] = useState([]);
+
   const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
@@ -63,6 +64,17 @@ export default function ObnStructureSetting({ theme, api_url }) {
     });
   };
 
+  const cancelEditMode = () => {
+    setStructureForm({
+      muummee: "",
+      damee: "",
+      daareektooretii: "",
+      deeskii: "",
+      gita_hojii: "",
+      maqaa: "",
+    });
+  };
+
   const onSubmitFormAdd = (e) => {
     e.preventDefault();
     axios.post(`${api_url}/obnStructure`, structureForm).then((response) => {
@@ -70,16 +82,8 @@ export default function ObnStructureSetting({ theme, api_url }) {
         ToastWarning("Duplicated Category Name!");
       } else {
         setRefresh((prevState) => !prevState);
-        setStructureForm({
-          muummee: "",
-          damee: "",
-          daareektooretii: "",
-          deeskii: "",
-          gita_hojii: "",
-          maqaa: "",
-        });
-        alert("saved");
-        ToastSuccess("Category saved successfully!");
+        cancelEditMode();
+        ToastSuccess("saved successfully!");
       }
     });
   };
@@ -102,6 +106,7 @@ export default function ObnStructureSetting({ theme, api_url }) {
         structureForm={structureForm}
         onSubmitFormAdd={onSubmitFormAdd}
       />
+
       <ScanCategoryTable
         theme={theme}
         api_url={api_url}

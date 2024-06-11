@@ -11,6 +11,7 @@ export default function SimpleDropdown({
   onChangeDropdownForm,
   optionOneByOne,
   title,
+  muummee,
 }) {
   const [dropdownClicked, setDropdownClicked] = useState(false);
 
@@ -106,7 +107,7 @@ export default function SimpleDropdown({
                   }`}
                   onClick={() => setDropdownClicked(false)}
                 >
-                  {val}
+                  {muummee ? val.muummee : val}
                 </p>
               </li>
             ))}

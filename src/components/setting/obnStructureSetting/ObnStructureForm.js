@@ -27,7 +27,7 @@ export default function ObnStructureForm({
             name="maqaa"
             type="text"
             theme={theme}
-            employeeFormData={structureForm.leader}
+            employeeFormData={structureForm.maqaa}
             OnChangeEmployeeForm={OnChangeStructureForm}
           />
           <FloatingLabel
@@ -36,7 +36,7 @@ export default function ObnStructureForm({
             title="MUUMMEE"
             name="muummee"
             type="text"
-            employeeFormData={structureForm.title_category}
+            employeeFormData={structureForm.muummee}
             OnChangeEmployeeForm={OnChangeStructureForm}
           />
           <FloatingLabel
@@ -44,7 +44,7 @@ export default function ObnStructureForm({
             name="damee"
             type="text"
             theme={theme}
-            employeeFormData={structureForm.title}
+            employeeFormData={structureForm.damee}
             OnChangeEmployeeForm={OnChangeStructureForm}
           />
           <FloatingLabel
@@ -53,7 +53,7 @@ export default function ObnStructureForm({
             required="no"
             type="text"
             theme={theme}
-            employeeFormData={structureForm.sub_category_of}
+            employeeFormData={structureForm.daareektooretii}
             OnChangeEmployeeForm={OnChangeStructureForm}
           />
           <FloatingLabel
@@ -62,7 +62,7 @@ export default function ObnStructureForm({
             required="no"
             type="text"
             theme={theme}
-            employeeFormData={structureForm.leader}
+            employeeFormData={structureForm.deeskii}
             OnChangeEmployeeForm={OnChangeStructureForm}
           />
           <FloatingLabel
@@ -70,7 +70,7 @@ export default function ObnStructureForm({
             name="gita_hojii"
             type="text"
             theme={theme}
-            employeeFormData={structureForm.leader}
+            employeeFormData={structureForm.gita_hojii}
             OnChangeEmployeeForm={OnChangeStructureForm}
           />
         </div>
