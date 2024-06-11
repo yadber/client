@@ -64,13 +64,14 @@ export default function Accordion({
   table,
   api_url,
   setFiles,
+  hr,
   employee_id,
 }) {
   let [vacancyData, setVacancyData] = useState([]);
   const [subScanCategoryForms, setSubScanCategoryForms] = useState([]);
   const [accordionClicked, setAccordionClicked] = useState(false);
   const [vacancyLimitedData, setVacancyLimitedData] = useState([]);
-  const [tab, setTab] = useState("add");
+  const [tab, setTab] = useState(hr ? "view" : "add");
   const [viewType, setViewType] = useState("gallery");
   const [searchValue, setSearchValue] = useState("");
   const [refresh, setRefresh] = useState(false);
@@ -367,7 +368,7 @@ export default function Accordion({
 
         {accordionClicked && (
           <div>
-            <AccordionTabs theme={theme} tab={tab} setTab={setTab} />
+            <AccordionTabs theme={theme} tab={tab} setTab={setTab} hr={hr} />
 
             <div
               className={`p-5 border border-b-0   animate-bounce-slow ${

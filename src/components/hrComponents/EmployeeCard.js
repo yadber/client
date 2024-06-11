@@ -1,5 +1,5 @@
-import React from "react";
-
+import React, { useState } from "react";
+import { FaUserEdit } from "react-icons/fa";
 export default function EmployeeCard({
   id,
   theme,
@@ -12,7 +12,10 @@ export default function EmployeeCard({
   api_url,
   type,
   onEmployeeCardClicked,
+  onEmployeeEditClicked,
+  hr,
 }) {
+  const [showEdit, setShowEdit] = useState(false);
   return (
     <div
       className={`w-full max-w-[15rem] max-h-[15rem] ${
@@ -22,9 +25,18 @@ export default function EmployeeCard({
           ? "bg-gray-800 hover:bg-gray-600 border-gray-700"
           : "bg-white hover:bg-gray-200 border-gray-200"
       }`}
-      onClick={() => onEmployeeCardClicked(id, name)}
+      onMouseEnter={() => setShowEdit(true)}
+      onMouseLeave={() => setShowEdit(false)}
     >
-      <div className="flex flex-col items-center pb-10">
+      <span className="text-blue-500 cursor-pointer">
+        {hr && showEdit && (
+          <FaUserEdit onClick={() => onEmployeeEditClicked(id, name)} />
+        )}
+      </span>
+      <div
+        className="flex flex-col items-center pb-10"
+        onClick={() => onEmployeeCardClicked(id, name)}
+      >
         <img
           crossOrigin="anonymous"
           className="w-24 h-24 mb-3 rounded-full shadow-lg"
@@ -32,7 +44,7 @@ export default function EmployeeCard({
           alt="Employee Profile"
         />
         <h5
-          className={`mb-1 text-sm font-medium uppercase    ${
+          className={`mb-1 text-sm font-medium uppercase text-nowrap    ${
             theme ? "text-white" : "text-gray-900"
           }`}
         >

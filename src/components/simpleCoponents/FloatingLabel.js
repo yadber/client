@@ -10,12 +10,14 @@ export default function FloatingLabel({
   upperCase,
   fullNameValidation,
   please,
+  required,
 }) {
   return (
     <div className="relative">
       <input
-        required
+        required={required ? false : true}
         name={name}
+        autocomplete="off"
         value={employeeFormData}
         onChange={
           please

@@ -14,8 +14,8 @@ export default function NavBarMenu({
   const [mobileNavbar, setMobileNavbar] = useState(false);
   return (
     <nav
-      className={`  ${
-        theme ? "bg-gray-900 border-gray-700" : "bg-gray-50 border-gray-300"
+      className={` font-serif ${
+        theme ? "bg-gray-900  border-gray-700" : "bg-gray-50 border-gray-300"
       }`}
     >
       <div className="max-w-screen-xl flex flex-wrap items-center ml-6 sm:ml-3  justify-between mx-auto p-4">
@@ -79,7 +79,7 @@ export default function NavBarMenu({
                 Setting
               </div>
             </li>
-            <li>
+            {/* <li>
               <div
                 className={`block py-2 px-3  cursor-pointer rounded  md:border-0  md:p-0 ${
                   NavbarMenu === "pricing" && "text-xl"
@@ -92,8 +92,8 @@ export default function NavBarMenu({
               >
                 Pricing
               </div>
-            </li>
-            <li>
+            </li> */}
+            {/* <li>
               <div
                 className={`block py-2 px-3 cursor-pointer  rounded  md:border-0  md:p-0   ${
                   NavbarMenu === "contact" && "text-xl"
@@ -106,7 +106,7 @@ export default function NavBarMenu({
               >
                 Contact
               </div>
-            </li>
+            </li> */}
             <li>
               <div className="text-xl flex items-center ml-3 sm:ml-0 ">
                 {theme ? (

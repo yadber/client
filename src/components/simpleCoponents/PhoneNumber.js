@@ -30,6 +30,7 @@ export default function PhoneNumber({
           </svg>
         </div>
         <input
+          autocomplete="off"
           name={name}
           type="number"
           onChange={OnChangeEmployeeForm}

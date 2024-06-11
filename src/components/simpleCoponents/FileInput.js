@@ -25,6 +25,7 @@ export default function FileInput({
         } `}
         id="file_input"
         type="file"
+        autocomplete="off"
         accept={accept}
         onChange={(e) => handleFileUpload(e)}
       />

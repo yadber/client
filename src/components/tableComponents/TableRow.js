@@ -19,7 +19,7 @@ export default function TableRow({
           theme
             ? "bg-gray-800 border-gray-700 hover:bg-gray-500"
             : "bg-white hover:bg-gray-100"
-        }`}
+        } ${date === "0" && "bg-blue-800"}`}
       >
         <th
           scope="row"
@@ -31,8 +31,14 @@ export default function TableRow({
         </th>
         <td className="px-6 py-4">{color}</td>
         <td className="px-6 py-4">{displayOrder}</td>
-        <td className="px-6 py-4">{table}</td>
-        <td className="px-6 py-4">{date}</td>
+        <td
+          className={`px-6 py-4 font-medium  whitespace-nowrap  ${
+            theme ? "text-white" : "text-gray-900"
+          }`}
+        >
+          {table}
+        </td>
+        <td className="px-6 py-4">{date === "0" ? "root" : date}</td>
         <td
           className="px-6 py-4 hover:text-red-500 cursor-pointer"
           onClick={() => onDeleteScanCategoryClicked(id)}

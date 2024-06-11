@@ -23,33 +23,51 @@ export default function ObnStructureForm({
       >
         <div className=" p-3 w-full flex flex-col gap-2">
           <FloatingLabel
+            title="MAQAA"
+            name="maqaa"
+            type="text"
             theme={theme}
-            title="Title Category"
-            name="title_category"
+            employeeFormData={structureForm.leader}
+            OnChangeEmployeeForm={OnChangeStructureForm}
+          />
+          <FloatingLabel
+            theme={theme}
+            required="no"
+            title="MUUMMEE"
+            name="muummee"
             type="text"
             employeeFormData={structureForm.title_category}
             OnChangeEmployeeForm={OnChangeStructureForm}
           />
           <FloatingLabel
-            title="Title"
-            name="title"
+            title="DAMEE"
+            name="damee"
             type="text"
             theme={theme}
             employeeFormData={structureForm.title}
             OnChangeEmployeeForm={OnChangeStructureForm}
           />
           <FloatingLabel
-            title="Subcategory of"
-            name="sub_category_of"
+            title="DAAREEKTOORETII"
+            name="daareektooretii"
+            required="no"
             type="text"
             theme={theme}
             employeeFormData={structureForm.sub_category_of}
             OnChangeEmployeeForm={OnChangeStructureForm}
-            required={false}
           />
           <FloatingLabel
-            title="The Leader"
-            name="leader"
+            title="DEESKII"
+            name="deeskii"
+            required="no"
+            type="text"
+            theme={theme}
+            employeeFormData={structureForm.leader}
+            OnChangeEmployeeForm={OnChangeStructureForm}
+          />
+          <FloatingLabel
+            title="GITA HOJII"
+            name="gita_hojii"
             type="text"
             theme={theme}
             employeeFormData={structureForm.leader}

@@ -15,7 +15,7 @@ export default function SideBarMenu({
   return (
     <div>
       <button
-        className={`items-center p-2  ms-3 sm:hidden   focus:outline-none focus:ring-2   flex mt-[-2.5rem] ml-[-1px] ${
+        className={`items-center font-serif p-2  ms-3 sm:hidden   focus:outline-none focus:ring-2   flex mt-[-2.5rem] ml-[-1px] ${
           theme
             ? "text-gray-400 hover:bg-gray-700 focus:ring-gray-600"
             : "text-gray-500 rounded-lg  hover:bg-gray-100 focus:ring-gray-200"
@@ -84,7 +84,7 @@ export default function SideBarMenu({
                 </div>
               </li>
 
-              <li>
+              {/* <li>
                 <div
                   className={`flex items-center p-2  rounded-lg   group ${
                     theme
@@ -105,8 +105,8 @@ export default function SideBarMenu({
                     Pro
                   </span>
                 </div>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <div
                   className={`flex items-center p-2  rounded-lg  group ${
                     theme
@@ -125,14 +125,14 @@ export default function SideBarMenu({
                     3
                   </span>
                 </div>
-              </li>
+              </li> */}
             </ul>
           ) : (
-            <ul className="space-y-2 font-medium">
+            <ul className="space-y-2 font-medium font-serif">
               {MenuOptions.map((val) => (
                 <li>
                   <div
-                    className={`flex items-center p-2  rounded-lg group
+                    className={`flex items-center p-2 font-serif  rounded-lg group
                 ${sideBarMenu === val && "bg-blue-400"}
                 ${
                   theme

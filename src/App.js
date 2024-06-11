@@ -5,7 +5,7 @@ import HrComponent from "./components/hrComponents/HrComponent";
 import DmsComponent from "./components/dmsComponent/DmsComponent";
 import ScanCategorySetting from "./components/setting/ScanCategorySetting";
 import ObnStructureSetting from "./components/setting/obnStructureSetting/ObnStructureSetting";
-const api_url = "http://172.20.119.250:9000";
+const api_url = "http://localhost:9000";
 export default function App() {
   const [isDarkTheme, setIsDarkTheme] = useState(true);
   document.body.style.backgroundColor = isDarkTheme ? "black" : "white";
@@ -21,7 +21,7 @@ export default function App() {
         setNavbarMenu={setNavbarMenu}
       />
 
-      <div className="md:flex">
+      <div className="md:flex font-serif">
         <div className="md:basis-1/6 ">
           {NavbarMenu === "Home" && (
             <SideBarMenu
@@ -46,7 +46,7 @@ export default function App() {
                 api_url={api_url}
                 setSidebarMenu={setSidebarMenu}
                 sideBarMenu={sideBarMenu}
-                MenuOptions={["Scan Category Setting", "Muummee Type Setting"]}
+                MenuOptions={["Scan Category Setting", "OBN structure Setting"]}
               />
             </>
           )}
@@ -56,7 +56,7 @@ export default function App() {
             )}
 
           {NavbarMenu === "Setting" &&
-            sideBarMenu === "Muummee Type Setting" && (
+            sideBarMenu === "OBN structure Setting" && (
               <ObnStructureSetting theme={isDarkTheme} api_url={api_url} />
             )}
         </div>

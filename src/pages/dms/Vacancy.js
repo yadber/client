@@ -3,7 +3,7 @@ import axios from "axios";
 
 import "react-toastify/dist/ReactToastify.css";
 import Accordion from "../../components/complexComponents/Accordion";
-export default function Vacancy({ theme, api_url, employee_id }) {
+export default function Vacancy({ theme, api_url, employee_id, hr }) {
   const [files, setFiles] = useState([]);
   const [scanCategory, setScanCategory] = useState([]);
 
@@ -39,6 +39,7 @@ export default function Vacancy({ theme, api_url, employee_id }) {
       <div className="flex flex-col gap-2">
         {scanCategory.map((val) => (
           <Accordion
+            hr={hr}
             key={val.id}
             api_url={api_url}
             employee_id={employee_id}

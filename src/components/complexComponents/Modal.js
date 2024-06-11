@@ -11,6 +11,7 @@ export default function Modal({
   id,
   api_url,
   theme,
+  hr,
 }) {
   const [clickedTab, setClickedTab] = useState("scan");
   let [vacancyData, setVacancyData] = useState([]);
@@ -61,6 +62,7 @@ export default function Modal({
                 theme={theme}
                 clickedTab={clickedTab}
                 setClickedTab={setClickedTab}
+                hr={hr}
               />
               <div>
                 {clickedTab === "scan" && (
@@ -69,7 +71,12 @@ export default function Modal({
                       theme ? "text-gray-200" : "text-gray-800"
                     } `}
                   >
-                    <Vacancy theme={theme} api_url={api_url} employee_id={id} />
+                    <Vacancy
+                      theme={theme}
+                      api_url={api_url}
+                      employee_id={id}
+                      hr={hr}
+                    />
                   </p>
                 )}
 
