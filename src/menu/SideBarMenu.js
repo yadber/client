@@ -45,11 +45,13 @@ export default function SideBarMenu({
             <ul className="space-y-2 font-medium">
               <li>
                 <div
-                  className={`flex items-center p-2  rounded-lg    group ${
+                  className={`flex items-center p-2  rounded-lg    group 
+                    ${sideBarMenu === "Dashboard" && "bg-blue-400"} ${
                     theme
                       ? "text-white hover:bg-gray-700"
                       : "text-gray-900 hover:bg-gray-100"
                   }`}
+                  onClick={() => setSidebarMenu("Dashboard")}
                 >
                   <span className="ms-3">Dashboard</span>
                 </div>
@@ -83,49 +85,6 @@ export default function SideBarMenu({
                   <span className="ms-3">DMS</span>
                 </div>
               </li>
-
-              {/* <li>
-                <div
-                  className={`flex items-center p-2  rounded-lg   group ${
-                    theme
-                      ? "text-white hover:bg-gray-700"
-                      : "text-gray-900  hover:bg-gray-100"
-                  }`}
-                >
-                  <span className="flex-1 ms-3 whitespace-nowrap">
-                    Notification
-                  </span>
-                  <span
-                    className={`inline-flex items-center justify-center px-2 ms-3 text-sm font-medium  rounded-full ${
-                      theme
-                        ? "bg-gray-700 text-gray-300 "
-                        : "text-gray-800 bg-gray-100"
-                    }`}
-                  >
-                    Pro
-                  </span>
-                </div>
-              </li> */}
-              {/* <li>
-                <div
-                  className={`flex items-center p-2  rounded-lg  group ${
-                    theme
-                      ? "text-white  hover:bg-gray-700"
-                      : "text-gray-900 hover:bg-gray-100"
-                  }`}
-                >
-                  <span className="flex-1 ms-3 whitespace-nowrap">Inbox</span>
-                  <span
-                    className={`inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium  rounded-full  ${
-                      theme
-                        ? "bg-blue-900 text-blue-300"
-                        : "text-blue-800 bg-blue-100"
-                    }`}
-                  >
-                    3
-                  </span>
-                </div>
-              </li> */}
             </ul>
           ) : (
             <ul className="space-y-2 font-medium font-serif">

@@ -135,6 +135,37 @@ export default function Accordion({
         }
       });
   };
+  const deleteSpecifiedDocument = (idData) => {
+    const id = idData.id;
+    const fileName = idData.file_name;
+    const employeeId = idData.employee_id;
+    confirmAlert({
+      title: "Confirm to submit",
+      message: "Are you sure to DELETE this?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () =>
+            axios
+              .delete(
+                `${api_url}/vacancyRoute/deleteOneImage/${employeeId}/${fileName}/${id}/${table}`
+              )
+              .then((response) => {
+                if (response.data === "CantDelete") {
+                  ToastWarning("Can Not Delete");
+                } else {
+                  ToastDanger("Deleted successfully!");
+                  setRefresh((prevState) => !prevState);
+                }
+              }),
+        },
+        {
+          label: "No",
+          onClick: () => "",
+        },
+      ],
+    });
+  };
 
   const onSubmitFormAdd = (e) => {
     e.preventDefault();
@@ -431,10 +462,10 @@ export default function Accordion({
                     {viewType === "gallery" && (
                       <div>
                         <div>
-                          <SearchBar
+                          {/* <SearchBar
                             onChangeSearchValue={onChangeSearchValue}
                             searchValue={searchValue}
-                          />
+                          /> */}
                         </div>
                         <div className="flex flex-wrap items-center justify-center p-1 gap-3">
                           {searchValue
@@ -445,19 +476,29 @@ export default function Accordion({
                                 .map((res) => (
                                   <Gallery
                                     key={res.id}
+                                    id={res}
                                     theme={theme}
                                     title={res.File_Order}
                                     url={res.file_name}
                                     api_url={api_url}
+                                    hr={hr}
+                                    deleteSpecifiedDocument={
+                                      deleteSpecifiedDocument
+                                    }
                                   />
                                 ))
                             : vacancyData.map((res) => (
                                 <Gallery
+                                  hr={hr}
+                                  id={res}
                                   key={res.id}
                                   theme={theme}
                                   title={res.File_Order}
                                   url={res.file_name}
                                   api_url={api_url}
+                                  deleteSpecifiedDocument={
+                                    deleteSpecifiedDocument
+                                  }
                                 />
                               ))}
                         </div>

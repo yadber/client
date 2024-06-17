@@ -79,34 +79,6 @@ export default function NavBarMenu({
                 Setting
               </div>
             </li>
-            {/* <li>
-              <div
-                className={`block py-2 px-3  cursor-pointer rounded  md:border-0  md:p-0 ${
-                  NavbarMenu === "pricing" && "text-xl"
-                }      ${
-                  theme
-                    ? "hover:text-white hover:bg-gray-700 text-white md:hover:bg-transparent md:hover:text-blue-500"
-                    : "text-gray-900 hover:bg-gray-100 md:hover:text-blue-700 md:hover:bg-transparent "
-                }`}
-                onClick={() => setNavbarMenu("pricing")}
-              >
-                Pricing
-              </div>
-            </li> */}
-            {/* <li>
-              <div
-                className={`block py-2 px-3 cursor-pointer  rounded  md:border-0  md:p-0   ${
-                  NavbarMenu === "contact" && "text-xl"
-                }     ${
-                  theme
-                    ? "hover:text-white hover:bg-gray-700 text-white md:hover:bg-transparent md:hover:text-blue-500"
-                    : "text-gray-900 hover:bg-gray-100 md:hover:text-blue-700 md:hover:bg-transparent "
-                }`}
-                onClick={() => setNavbarMenu("contact")}
-              >
-                Contact
-              </div>
-            </li> */}
             <li>
               <div className="text-xl flex items-center ml-3 sm:ml-0 ">
                 {theme ? (

@@ -18,7 +18,7 @@ export default function EmployeeCard({
   const [showEdit, setShowEdit] = useState(false);
   return (
     <div
-      className={`w-full max-w-[15rem] max-h-[15rem] ${
+      className={`w-full max-w-[16rem] max-h-[15rem] ${
         dms === 0 && "border-red-500"
       }  border  rounded-lg shadow cursor-pointer  ${
         theme
